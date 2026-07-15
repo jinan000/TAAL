@@ -9,7 +9,6 @@ export default function CinematicVideo() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
   const textOverlayRef = useRef<HTMLDivElement>(null);
-  const particlesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!sectionRef.current || !videoContainerRef.current || !textOverlayRef.current) return;
