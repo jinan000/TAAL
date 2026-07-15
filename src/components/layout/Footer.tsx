@@ -1,4 +1,5 @@
 import { CONTACT_INFO } from '../../utils/constants';
+import logoImage from '../../assets/Taal-Logopng.png';
 
 // Custom social SVG icons
 function InstagramIcon({ size = 20 }: { size?: number }) {
@@ -52,7 +53,7 @@ export default function Footer() {
       <div className="section-container flex flex-col items-center text-center">
         {/* Logo */}
         <div className="flex items-center gap-3 mb-4">
-          <img src="/src/assets/Taal-Logopng.png" alt="TAAL Logo" className="w-10 h-10 object-contain" />
+          <img src={logoImage} alt="TAAL Logo" className="w-10 h-10 object-contain" />
           <span className="font-display text-2xl text-soft-ivory tracking-wide">
             TAAL
           </span>

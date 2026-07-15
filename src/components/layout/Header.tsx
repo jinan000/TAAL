@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { NAV_LINKS } from '../../utils/constants';
 import MagneticButton from '../ui/MagneticButton';
+import logoImage from '../../assets/Taal-Logopng.png';
 
 const toTitleCase = (str: string) => {
   return str.replace(
@@ -90,7 +91,7 @@ export default function Header() {
             className="flex items-center group relative z-10 flex-shrink-0"
           >
             <img 
-              src="/src/assets/Taal-Logopng.png" 
+              src={logoImage} 
               alt="TAAL Logo" 
               className="h-12 md:h-14 w-auto object-contain transition-transform duration-500 group-hover:scale-105" 
             />

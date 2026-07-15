@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import MagneticButton from '../ui/MagneticButton';
 import ScrollingWords from '../ui/ScrollingWords';
+import heroImage from '../../assets/hero.jpeg';
 
 export default function Hero() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -29,7 +30,7 @@ export default function Hero() {
       {/* Background image full view */}
       <div className="absolute inset-0">
         <img 
-          src="/src/assets/hero.jpeg" 
+          src={heroImage} 
           alt="Hero Background" 
           className="w-full h-full object-cover" 
         />
