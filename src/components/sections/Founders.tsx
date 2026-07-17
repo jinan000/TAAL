@@ -14,7 +14,7 @@ const imageMap: Record<string, string> = {
   linta: lintaImg,
 };
 
-const FounderCard = ({ founder }: { founder: typeof FOUNDERS[0] }) => {
+const FounderCard = ({ founder }: { founder: typeof FOUNDERS[number] }) => {
   const [expanded, setExpanded] = useState(false);
   const imageSrc = imageMap[founder.imageKey];
 
