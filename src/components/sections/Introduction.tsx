@@ -42,7 +42,18 @@ export default function Introduction() {
       }}
     >
       {/* Dark overlay for readability */}
-      <div className="absolute inset-0 bg-black/70 z-0" />
+      <div className="absolute inset-0 z-0 bg-cover bg-center bg-fixed opacity-[0.35]"
+        style={{ 
+          backgroundImage: `url(${introBg})`,
+          filter: 'contrast(1.2) saturate(1.2)' 
+        }}
+      />
+      
+      {/* Dark gradient to blend the edges */}
+      <div 
+        className="absolute inset-0 z-0"
+        style={{ background: 'linear-gradient(180deg, #050505 0%, rgba(5,5,5,0.5) 50%, #050505 100%)' }}
+      />
 
       {/* Decorative accent */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-rose-gold/10 to-transparent z-10" />

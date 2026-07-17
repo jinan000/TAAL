@@ -20,7 +20,7 @@ function FAQItem({
   onToggle: () => void;
 }) {
   return (
-    <div className="border border-white/[0.06] rounded-2xl bg-white/[0.02] backdrop-blur-sm overflow-hidden transition-colors duration-300 hover:border-white/[0.1]">
+    <div className="glass-panel rounded-2xl overflow-hidden transition-colors duration-300 hover:border-white/[0.1] hover:bg-white/[0.03]">
       <button
         onClick={onToggle}
         className="w-full flex items-center justify-between p-6 md:p-8 text-left gap-4"
@@ -101,6 +101,14 @@ export default function FAQ() {
               />
             </div>
           ))}
+        </div>
+
+        {/* Concluding text */}
+        <div className="mt-16 text-center max-w-2xl mx-auto faq-item">
+          <h4 className="font-display text-xl text-soft-ivory mb-3">Still have questions?</h4>
+          <p className="text-soft-ivory/60 text-sm leading-relaxed">
+            We're here to help! Feel free to contact us by phone, email, or social media, and our team will be happy to assist you.
+          </p>
         </div>
       </div>
     </section>

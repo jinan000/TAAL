@@ -1,15 +1,16 @@
 import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Sparkles, Music, Users, Star, Award, Heart } from 'lucide-react';
+import { Sparkles, Music, Users, Star, Award, Heart, Mic, Smile, Home } from 'lucide-react';
 import SectionTitle from '../ui/SectionTitle';
 import GlassCard from '../ui/GlassCard';
 import { WHY_CHOOSE_FEATURES } from '../../utils/constants';
+import whyChooseBg from '../../assets/whychooseus.jpeg';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const iconMap: Record<string, React.ElementType> = {
-  Sparkles, Music, Users, Star, Award, Heart,
+  Sparkles, Music, Users, Star, Award, Heart, Mic, Smile, Home,
 };
 
 export default function WhyChoose() {
@@ -63,9 +64,14 @@ export default function WhyChoose() {
       ref={sectionRef}
       id="why-choose"
       className="relative section-spacing overflow-hidden"
-      style={{ background: 'linear-gradient(180deg, #050505 0%, #111111 50%, #050505 100%)' }}
+      style={{ 
+        backgroundImage: `linear-gradient(180deg, rgba(5, 5, 5, 0.9) 0%, rgba(17, 17, 17, 0.3) 50%, rgba(5, 5, 5, 0.9) 100%), url(${whyChooseBg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed'
+      }}
     >
-      <div className="section-container">
+      <div className="section-container relative z-10">
         <SectionTitle eyebrow="Why Choose Us">
           Where Dance Becomes{' '}
           <span className="text-gradient-rose">Destiny</span>
@@ -74,8 +80,7 @@ export default function WhyChoose() {
         {/* Manifesto */}
         <div className="manifesto-text max-w-3xl mx-auto text-center mb-20">
           <p className="text-xl md:text-2xl text-soft-ivory/60 font-light leading-relaxed font-display italic">
-            "We don't just teach dance. We ignite passion, build confidence, and create a 
-            community where every soul finds their rhythm."
+            "At Taal Dance Academy, we believe every dancer has a unique journey. Whether you're stepping into a dance studio for the first time or looking to refine your skills, we're here to help you grow with confidence, passion, and purpose."
           </p>
         </div>
 

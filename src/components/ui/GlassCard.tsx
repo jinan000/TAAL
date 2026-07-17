@@ -36,7 +36,7 @@ export default function GlassCard({
   return (
     <motion.div
       ref={cardRef}
-      className={`relative overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.03] backdrop-blur-xl ${
+      className={`relative overflow-hidden rounded-2xl glass-panel ${
         hover ? 'cursor-pointer' : ''
       } ${className}`}
       onMouseMove={handleMouseMove}

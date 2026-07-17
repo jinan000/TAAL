@@ -6,11 +6,12 @@ import SectionTitle from '../ui/SectionTitle';
 import GlassCard from '../ui/GlassCard';
 import MagneticButton from '../ui/MagneticButton';
 import { TEAM_POSITIONS } from '../../utils/constants';
+import bgImage from '../../assets/joinourteam.jpeg';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const iconMap: Record<string, React.ElementType> = {
-  'Performance Team': Mic,
+  'Performance Team (Taal Crew)': Mic,
   'Instructor Team': GraduationCap,
   'Admin Team': Briefcase,
 };
@@ -43,11 +44,25 @@ export default function JoinTeam() {
       className="relative section-spacing overflow-hidden"
       style={{ background: 'linear-gradient(180deg, #050505 0%, #111111 50%, #050505 100%)' }}
     >
-      <div className="section-container">
-        <SectionTitle eyebrow="Careers">
+      <div 
+        className="absolute inset-0 z-0 opacity-[0.35] bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${bgImage})` }}
+      />
+      <div 
+        className="absolute inset-0 z-0"
+        style={{ background: 'linear-gradient(180deg, #050505 0%, rgba(5,5,5,0.4) 20%, rgba(5,5,5,0.4) 80%, #050505 100%)' }}
+      />
+      <div className="section-container relative z-10">
+        <SectionTitle eyebrow="Join Our Team">
           Join The{' '}
           <span className="text-gradient-rose">TAAL Family</span>
         </SectionTitle>
+
+        <div className="text-center mb-16 max-w-2xl mx-auto">
+          <p className="text-soft-ivory/60 text-lg">
+            Passionate about dance and making a difference? We'd love to have you as part of the Taal family!
+          </p>
+        </div>
 
         <div className="team-grid grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {TEAM_POSITIONS.map((pos) => {
@@ -66,15 +81,7 @@ export default function JoinTeam() {
                     {pos.description}
                   </p>
 
-                  {/* Requirements */}
-                  <div className="space-y-2 mb-8">
-                    {pos.requirements.map((req) => (
-                      <div key={req} className="flex items-center gap-2">
-                        <div className="w-1 h-1 rounded-full bg-rose-gold/40" />
-                        <span className="text-xs text-soft-ivory/30">{req}</span>
-                      </div>
-                    ))}
-                  </div>
+
 
                   <div className="flex items-center gap-2 text-rose-gold/70 text-xs tracking-widest uppercase group cursor-pointer hover:text-rose-gold transition-colors">
                     <span>Apply Now</span>
@@ -88,10 +95,12 @@ export default function JoinTeam() {
 
         {/* Resume CTA */}
         <div className="mt-16 text-center">
-          <p className="text-soft-ivory/30 text-sm mb-6">
-            Don't see a role that fits? Send us your resume anyway.
+          <p className="text-soft-ivory/60 text-lg mb-6 max-w-2xl mx-auto">
+            Interested in joining us? We'd love to hear from you! Send us your resume at <a href="mailto:infoattaaldanceacademy@gmail.com" className="text-rose-gold hover:underline">infoattaaldanceacademy@gmail.com</a>
+            <br/><br/>
+            Or get in touch to learn about current opportunities.
           </p>
-          <MagneticButton variant="secondary" href={`mailto:${encodeURIComponent('info@taaldanceacademy.com')}`}>
+          <MagneticButton variant="secondary" href="mailto:infoattaaldanceacademy@gmail.com">
             Send Your Resume
           </MagneticButton>
         </div>

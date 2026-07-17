@@ -2,6 +2,18 @@
 // TAAL DANCE ACADEMY — ALL CONTENT DATA
 // ═══════════════════════════════════════════
 
+import imgKids from '../assets/classes/kids.png';
+import imgTeens from '../assets/classes/teens.png';
+import imgElite from '../assets/classes/elite.png';
+import imgSemiClassical from '../assets/classes/semiclassical.png';
+import imgWedding from '../assets/classes/wedding.png';
+import imgOnline from '../assets/classes/online.png';
+import imgBharatanatyam from '../assets/gallery/bharatanatyam.png';
+import imgDance from '../assets/gallery/dance.png';
+import imgPerformance from '../assets/gallery/performance.png';
+import imgBts from '../assets/gallery/bts.png';
+import imgCommunity from '../assets/gallery/community.png';
+
 export const NAV_LINKS = [
   { label: 'Home', href: '#hero' },
   { label: 'About', href: '#introduction' },
@@ -32,115 +44,165 @@ export const STATS = [
 export const WHY_CHOOSE_FEATURES = [
   {
     title: 'Expert Guidance',
-    description: 'Learn from professionally trained dancers with decades of combined experience in classical and contemporary forms.',
-    icon: 'Sparkles',
+    description: 'Learn from experienced instructors dedicated to helping every student succeed.',
+    icon: 'Award',
   },
   {
-    title: 'Diverse Dance Styles',
-    description: 'From Bharatanatyam to Bollywood, Semi-Classical to Contemporary — explore the full spectrum of Indian dance.',
+    title: 'Diverse Dance Training',
+    description: 'Explore Bharatanatyam, Bollywood, fitness, and contemporary styles in one academy.',
     icon: 'Music',
   },
   {
-    title: 'Vibrant Community',
-    description: 'Join a family of passionate dancers who inspire, support, and grow together through the art of movement.',
+    title: 'A Supportive Community',
+    description: 'Grow in a welcoming, inclusive environment where everyone feels valued.',
     icon: 'Users',
   },
   {
-    title: 'Build Confidence',
-    description: 'Our programs are designed to nurture self-expression, stage presence, and unshakeable confidence.',
+    title: 'Building Confidence',
+    description: 'Develop confidence, discipline, creativity, and teamwork through dance.',
     icon: 'Star',
   },
   {
     title: 'Performance Opportunities',
-    description: 'Showcase your talent at cultural events, competitions, and exclusive TAAL productions throughout the year.',
-    icon: 'Award',
+    description: 'Gain stage experience through recitals, community events, and special productions.',
+    icon: 'Mic',
   },
   {
     title: 'Personalized Learning',
-    description: 'Small batch sizes and tailored choreography ensure every dancer receives individual attention and growth.',
+    description: 'Receive individual attention and progress at a pace that suits you.',
     icon: 'Heart',
+  },
+  {
+    title: 'Learning Through Joy',
+    description: 'Enjoy energetic, engaging classes that make learning fun and rewarding.',
+    icon: 'Smile',
+  },
+  {
+    title: 'Tradition Meets Innovation',
+    description: 'Experience the perfect balance of cultural heritage and modern creativity.',
+    icon: 'Sparkles',
+  },
+  {
+    title: 'More Than a Dance Academy',
+    description: 'Become part of a supportive dance family that grows and celebrates together.',
+    icon: 'Home',
   },
 ] as const;
 
 export const CLASSES = [
   {
     title: 'Minions Bollywood',
-    subtitle: 'Ages 4–7',
-    description: 'A playful introduction to rhythm and movement for our youngest dancers.',
+    subtitle: 'Ages 4–8',
+    price: '$60/month',
+    dropIn: '$20/class',
+    description: 'A playful Bollywood class that builds rhythm, confidence, and coordination through dance.',
     color: '#F4DDD7',
+    image: imgKids,
   },
   {
     title: 'Titans Bollywood',
-    subtitle: 'Ages 8–12',
-    description: 'High-energy Bollywood choreography for growing dancers with big dreams.',
+    subtitle: 'Ages 9–15',
+    price: '$60/month',
+    dropIn: '$20/class',
+    description: 'A dynamic Bollywood program focused on technique, performance, and self-expression.',
     color: '#D8A7A0',
+    image: imgTeens,
   },
   {
     title: 'Elite Bollywood',
-    subtitle: 'Ages 13–17',
-    description: 'Advanced Bollywood techniques, stage performance, and competition-ready choreography.',
+    subtitle: 'Ages 16–25',
+    price: '$60/month',
+    dropIn: '$20/class',
+    description: 'Advanced Bollywood and fusion training designed to refine technique, versatility, and stage presence.',
     color: '#E8C8B8',
+    image: imgElite,
   },
   {
     title: 'Adult Bollywood',
-    subtitle: 'Ages 18+',
-    description: 'Express yourself through Bollywood dance — no experience necessary.',
+    subtitle: 'Above 25 yrs',
+    price: '$60/month',
+    dropIn: '$20/class',
+    description: 'Fun and energetic Bollywood classes for adults of all experience levels.',
     color: '#B97A72',
+    image: imgDance,
+  },
+  {
+    title: 'Semi-Classical',
+    subtitle: 'Above 25 yrs',
+    price: '$55/month',
+    dropIn: '$20/class',
+    description: 'Experience the beauty of Indian classical dance through a graceful blend of traditional styles and contemporary expression.',
+    color: '#E8C8B8',
+    image: imgSemiClassical,
   },
   {
     title: 'Bharatanatyam',
-    subtitle: 'Classical',
-    description: 'Master the ancient art of Bharatanatyam with traditional techniques and spiritual depth.',
+    subtitle: 'All age group',
+    price: '$65/month',
+    description: 'Learn the grace, discipline, and artistry of India\'s classical dance tradition.',
     color: '#D8A7A0',
-  },
-  {
-    title: 'Semi Classical',
-    subtitle: 'Fusion',
-    description: 'A beautiful blend of classical grace and contemporary expression.',
-    color: '#E8C8B8',
+    image: imgBharatanatyam,
   },
   {
     title: 'Dance Fitness',
-    subtitle: 'All Ages',
-    description: 'High-intensity Bollywood-inspired workouts that make fitness fun.',
+    subtitle: 'All age group',
+    price: '$50/month',
+    dropIn: '$18/class',
+    description: 'Stay active and energized with Bollywood-inspired dance workouts.',
     color: '#F4DDD7',
+    image: imgTeens,
   },
   {
     title: 'Private Lessons',
     subtitle: 'One-on-One',
-    description: 'Personalized coaching tailored to your goals and pace.',
+    description: 'One-on-one coaching tailored to your goals and learning pace.',
     color: '#B97A72',
+    image: imgBts,
+  },
+  {
+    title: 'Event & Program Choreography',
+    subtitle: 'Special Events',
+    description: 'Custom choreography for cultural events, stage performances, and special programs.',
+    color: '#D8A7A0',
+    image: imgPerformance,
   },
   {
     title: 'Wedding Choreography',
     subtitle: 'Special Events',
-    description: 'Create unforgettable moments with custom choreography for your big day.',
-    color: '#D8A7A0',
+    description: 'Create memorable wedding performances with personalized dance routines.',
+    color: '#E8C8B8',
+    image: imgWedding,
   },
   {
-    title: 'Corporate Events',
+    title: 'Corporate Workshops & Events',
     subtitle: 'Team Building',
-    description: 'Energize your team with Bollywood dance workshops and performances.',
-    color: '#E8C8B8',
+    description: 'Interactive dance sessions that bring energy, teamwork, and fun to the workplace.',
+    color: '#F4DDD7',
+    image: imgCommunity,
   },
   {
     title: 'Online Classes',
     subtitle: 'Virtual',
-    description: 'Learn from anywhere with our live virtual dance sessions.',
-    color: '#F4DDD7',
+    description: 'Learn from anywhere with live, interactive dance classes led by our instructors.',
+    color: '#B97A72',
+    image: imgOnline,
   },
-] as const;
+];
 
 export const FOUNDERS = [
   {
-    name: 'Founder One',
-    role: 'Co-Founder & Creative Director',
-    bio: 'With over 15 years of dance expertise spanning Bharatanatyam, Bollywood, and Contemporary forms, our visionary co-founder has trained thousands of students and performed on international stages. Their passion for Indian cultural arts drives the creative vision of TAAL.',
+    name: 'Shreeja Sudhakaran',
+    role: 'Co-Founder & Director',
+    shortBio: 'With over 15 years of teaching experience, Shreeja is a passionate dance educator trained in Bharatanatyam, Kuchipudi, Kathak, Bollywood, Contemporary, Jazz, Salsa, and more. She believes dance is a powerful tool for building confidence, creativity, and self-expression while creating a welcoming space where every student can thrive.',
+    longBio: 'Shreeja holds a Diploma in Bharatanatyam and has trained extensively across both classical and contemporary dance styles. In 2014, she was part of the Limca Book of Records for India\'s largest Salsa performance, serving as both a lead performer and instructor. She also appeared on the television show Entertainment Ke Liye Kuch Bhi Karega in 2013. At Taal Dance Academy, she combines technical excellence with an encouraging teaching approach, helping students grow as confident dancers and individuals.',
+    imageKey: 'shreeja'
   },
   {
-    name: 'Founder Two',
-    role: 'Co-Founder & Academy Director',
-    bio: 'A master choreographer and educator with a deep commitment to community building through dance. Their innovative teaching methods and dedication to excellence have transformed TAAL from a small studio into a thriving dance movement.',
+    name: 'Linta Kurian Kumbattu',
+    role: 'Co-Founder & Director',
+    shortBio: 'Linta is a dancer, choreographer, and mentor with over a decade of teaching and choreography experience. Trained in Bharatanatyam, Kuchipudi, Kerala Nadanam, and Kerala Folk Dance, she is passionate about helping students develop confidence, discipline, and a lifelong love for dance.',
+    longBio: 'Linta has represented her district at the Kerala State Youth Festival and has choreographed stage productions since 2007 across semi-classical, Bollywood, cinematic, and fusion styles. She served as Lead Dance Coordinator for the Brandon Malayali Association (2014–2022) before co-founding Dance Capital in Edmonton in 2023, where the team performed at major multicultural events, including the Shaan Rahman Live Show in 2024. At Taal Dance Academy, she brings her experience in performance, choreography, and mentorship to create inspiring classes that nurture technique, creativity, and stage confidence.',
+    imageKey: 'linta'
   },
 ] as const;
 
@@ -204,54 +266,71 @@ export const TIMELINE = [
 
 export const FAQ_DATA = [
   {
-    question: 'What age groups do you teach?',
-    answer: 'We offer classes for all ages starting from 4 years old. Our Minions program (4-7), Titans (8-12), Elite (13-17), and Adult classes (18+) ensure everyone finds their perfect fit.',
-  },
-  {
     question: 'Do I need prior dance experience?',
-    answer: 'Absolutely not! Many of our most passionate dancers started as complete beginners. Our programs are designed to nurture talent at every level, from first-timers to advanced performers.',
-  },
-  {
-    question: 'What dance styles do you offer?',
-    answer: 'We specialize in Bollywood, Bharatanatyam, Semi-Classical, Contemporary, Dance Fitness, and fusion styles. We also offer private lessons, wedding choreography, and corporate workshops.',
-  },
-  {
-    question: 'How do I book a free trial class?',
-    answer: 'You can book your free trial directly through our website using the "Book Free Trial" button, call us, or send a WhatsApp message. We\'ll match you with the perfect class based on your age and interests.',
+    answer: 'Not at all! We welcome dancers of all skill levels. Whether you\'re a complete beginner or have years of experience, our classes are designed to help you learn and grow at your own pace.',
   },
   {
     question: 'What should I wear to class?',
-    answer: 'Comfortable clothing that allows freedom of movement. For Bharatanatyam, traditional practice attire is recommended after the initial classes. We\'ll guide you on specific requirements for each style.',
+    answer: 'Wear comfortable clothing that allows you to move freely. Carry a clean indoor shoe (outside shoes are not permitted in the studio). Please bring a water bottle and a positive attitude!',
   },
   {
-    question: 'Do you offer performance opportunities?',
-    answer: 'Yes! We organize multiple performances throughout the year including cultural events, community showcases, competitions, and our annual TAAL Grand Show. Every student gets a chance to shine on stage.',
+    question: 'Can I join mid-session?',
+    answer: 'Yes! Depending on the class and available spots, students can join after a session has started. Our instructors will help you settle in and catch up on what you\'ve missed.',
   },
   {
-    question: 'What is TAAL Cares?',
-    answer: 'TAAL Cares is our community initiative where we use dance as a tool for social impact. We conduct free workshops, charity performances, and community events to spread the joy of dance to underserved communities.',
+    question: 'What if I miss a class?',
+    answer: 'If you miss a class, please let us know in advance whenever possible. Monthly membership fees are non-refundable, and missed classes cannot be refunded or carried forward. However, if you\'ve booked a drop-in class and notify us in advance, we\'ll be happy to work with you to reschedule or provide a refund.',
   },
   {
-    question: 'Are online classes available?',
-    answer: 'Yes, we offer live virtual classes for students who cannot attend in person. Our online program maintains the same quality, energy, and personal attention as our studio classes.',
+    question: 'Are trial classes available?',
+    answer: 'Yes! We offer trial classes so you can experience our teaching style and studio environment before committing to a program. Contact us to book your trial.',
+  },
+  {
+    question: 'How do I register?',
+    answer: 'You can register by contacting us via phone or email, or by sending us a message on our social media platforms.',
+  },
+  {
+    question: 'What age groups do you offer classes for?',
+    answer: 'We offer classes for children, teens, and adults. Our programs are designed to suit different age groups and skill levels.',
+  },
+  {
+    question: 'Do you offer private lessons?',
+    answer: 'Yes! We offer one-on-one and small group private lessons for students looking for personalized instruction, competition preparation, or faster progress.',
+  },
+  {
+    question: 'Do you provide wedding choreography?',
+    answer: 'Absolutely! We create customized choreography for couples, families, and bridal parties to make your special day unforgettable.',
+  },
+  {
+    question: 'Can Taal perform at our event?',
+    answer: 'Yes! We perform at cultural festivals, corporate events, school functions, weddings, private celebrations, and community events. Contact us to discuss your event and performance requirements.',
+  },
+  {
+    question: 'Do you offer community or volunteer programs?',
+    answer: 'Yes! Through Taal Cares, our community initiative, we support local events, volunteer programs, and outreach activities that use dance to bring people together and make a positive impact.',
+  },
+  {
+    question: 'How are payments made?',
+    answer: 'Fees can be paid by interac. You can send interac to: infoattaaldanceacademy@gmail.com',
+  },
+  {
+    question: 'What\'s your refund policy?',
+    answer: 'Fees are generally non-refundable once a program has started. If a class is cancelled by Taal Dance Academy, a make-up class or credit will be provided where applicable. Please contact us if you have any concerns—we\'re always happy to help.',
   },
 ] as const;
 
 export const TEAM_POSITIONS = [
   {
-    title: 'Performance Team',
-    description: 'Join our elite performance troupe and represent TAAL at competitions, cultural events, and exclusive productions across the country.',
-    requirements: ['Advanced dance skills', 'Stage presence', 'Team commitment', 'Available for rehearsals'],
+    title: 'Performance Team (Taal Crew)',
+    description: 'Love performing on stage? Join our Taal Crew and represent Taal at cultural events, community programs, competitions, and special showcases.',
   },
   {
     title: 'Instructor Team',
-    description: 'Share your passion for dance as a TAAL instructor. Help shape the next generation of dancers with your expertise and creativity.',
-    requirements: ['Professional training', 'Teaching experience', 'Passion for mentoring', 'Choreography skills'],
+    description: 'Inspire the next generation of dancers! We\'re always looking for passionate and dedicated instructors with strong dance training and a love for teaching.',
   },
   {
     title: 'Admin Team',
-    description: 'Support the TAAL mission behind the scenes. Help us grow our community, manage events, and create unforgettable experiences.',
-    requirements: ['Organizational skills', 'Communication', 'Event management', 'Social media savvy'],
+    description: 'Help us keep Taal running smoothly behind the scenes. From student support and event coordination to social media and operations, our Admin Team plays a vital role in creating an exceptional experience for our community.',
   },
 ] as const;
 

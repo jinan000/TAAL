@@ -116,11 +116,22 @@ export default function Classes() {
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
           >
             <div className="relative h-[480px] rounded-2xl overflow-hidden border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm group cursor-pointer">
+              {/* Background Image */}
+              {(cls as any).image && (
+                <img
+                  src={(cls as any).image}
+                  alt={cls.title}
+                  className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-105 group-hover:opacity-60 transition-all duration-700 ease-out"
+                />
+              )}
+              {/* Dark overlay so text is readable */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/30" />
+
               {/* Background gradient unique per card */}
               <div
                 className="absolute inset-0 opacity-20 transition-opacity duration-500 group-hover:opacity-30"
                 style={{
-                  background: `radial-gradient(ellipse at ${30 + (i % 3) * 20}% ${40 + (i % 2) * 20}%, ${cls.color}22 0%, transparent 70%)`,
+                  background: `radial-gradient(ellipse at ${30 + (i % 3) * 20}% ${40 + (i % 2) * 20}%, ${cls.color}40 0%, transparent 70%)`,
                 }}
               />
 
@@ -138,6 +149,24 @@ export default function Classes() {
                   <p className="text-soft-ivory/40 text-sm leading-relaxed font-light">
                     {cls.description}
                   </p>
+                  
+                  {/* Pricing Info */}
+                  {(('price' in cls) || ('dropIn' in cls)) && (
+                    <div className="flex flex-col gap-2 mt-6 pt-5 border-t border-white/[0.05]">
+                      {'price' in cls && (cls as any).price && (
+                        <div className="flex justify-between items-center">
+                          <span className="text-[10px] text-soft-ivory/40 uppercase tracking-widest font-medium">Monthly</span>
+                          <span className="text-sm font-medium text-soft-ivory">{(cls as any).price}</span>
+                        </div>
+                      )}
+                      {'dropIn' in cls && (cls as any).dropIn && (
+                        <div className="flex justify-between items-center">
+                          <span className="text-[10px] text-soft-ivory/40 uppercase tracking-widest font-medium">Drop-in</span>
+                          <span className="text-sm font-medium text-soft-ivory">{(cls as any).dropIn}</span>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 {/* Bottom */}

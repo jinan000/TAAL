@@ -294,14 +294,19 @@ export default function AboutUs() {
           {/* Col 3 */}
           <div className="au-col flex flex-col items-center px-4">
             <CommunitySVG className="w-10 h-10 text-rose-gold mb-6" />
-            <h3 className="text-soft-ivory tracking-widest uppercase text-sm mb-4">About Taal</h3>
+            <h3 className="text-soft-ivory tracking-widest uppercase text-sm mb-4">About Us</h3>
             <ExpandableBlock 
-              preview={<p>Founded in Edmonton, by two passionate dancers - Shreeja and Linta, Taal was built on a shared dream of creating a space where people of all ages and backgrounds feel inspired to move, learn, and grow together...</p>}
+              preview={
+                <p>
+                  At Taal Dance Academy, we believe dance is more than movement—it's a journey of confidence, creativity, and self-expression.
+                  Founded in Edmonton by Shreeja and Linta, Taal is a welcoming space...
+                </p>
+              }
               full={
                 <>
-                  <p>Founded in Edmonton, by two passionate dancers - Shreeja and Linta, Taal was built on a shared dream of creating a space where people of all ages and backgrounds feel inspired to move, learn, and grow together. Our approach goes beyond teaching choreography. We encourage every student to explore different dance styles, challenge their limits, and uncover the unique artist within.</p>
-                  <p>Whether you're joining us for Bollywood, Bharatanatyam, dance fitness, workshops, or performance training, every class is designed to be engaging, empowering, and filled with positive energy. Our instructors focus on building strong technique while nurturing confidence, discipline, and a genuine love for dance.</p>
-                  <p>At Taal, community is at the heart of everything we do. We celebrate every milestone, support every journey, and believe that everyone deserves a place where they feel seen, encouraged, and inspired.</p>
+                  <p>At Taal Dance Academy, we believe dance is more than movement—it's a journey of confidence, creativity, and self-expression.</p>
+                  <p>Founded in Edmonton by Shreeja and Linta, Taal is a welcoming space where students of all ages and skill levels can learn, grow, and thrive through dance. From Bharatanatyam and Bollywood to dance fitness and performance training, our classes combine quality instruction with a fun, supportive environment.</p>
+                  <p>More than teaching dance, we inspire confidence, celebrate culture, and build a community where every student feels encouraged to shine.</p>
                 </>
               }
             />
@@ -341,10 +346,10 @@ export default function AboutUs() {
         <div className="au-reveal text-center mt-auto">
           <h2 className="font-display text-2xl md:text-4xl text-soft-ivory leading-tight mb-4">
             Discover your rhythm.<br/>
-            Find your confidence.
+            Build your confidence.
           </h2>
           <p className="text-gradient-rose text-2xl md:text-3xl font-serif italic mb-6">
-            Become part of the Taal family.
+            Join the Taal family.
           </p>
           <LotusSVG className="w-6 h-6 text-rose-gold/40 mx-auto" />
         </div>

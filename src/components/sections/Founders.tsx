@@ -1,10 +1,82 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import SectionTitle from '../ui/SectionTitle';
 import { FOUNDERS } from '../../utils/constants';
+import visionariesBg from '../../assets/the-visionaries.jpeg';
+import shreejaImg from '../../assets/shreeja.jpeg';
+import lintaImg from '../../assets/linta.jpeg';
 
 gsap.registerPlugin(ScrollTrigger);
+
+const imageMap: Record<string, string> = {
+  shreeja: shreejaImg,
+  linta: lintaImg,
+};
+
+const FounderCard = ({ founder }: { founder: typeof FOUNDERS[0] }) => {
+  const [expanded, setExpanded] = useState(false);
+  const imageSrc = imageMap[founder.imageKey];
+
+  return (
+    <div className="founder-card group">
+      <div className="relative rounded-2xl overflow-hidden glass-panel flex flex-col h-full">
+        {/* Portrait */}
+        <div 
+          className="aspect-[3/4] relative overflow-hidden shrink-0"
+          style={{
+            WebkitMaskImage: 'linear-gradient(to bottom, black 65%, transparent 100%)',
+            maskImage: 'linear-gradient(to bottom, black 65%, transparent 100%)'
+          }}
+        >
+          <div className="absolute inset-0 bg-dark-velvet">
+            {imageSrc ? (
+              <img 
+                src={imageSrc} 
+                alt={founder.name} 
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+            ) : (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-28 h-28 rounded-full border-2 border-rose-gold/20 flex items-center justify-center group-hover:border-rose-gold/40 transition-colors duration-500">
+                  <span className="font-display text-3xl text-rose-gold/60">
+                    {founder.name.split(' ')[0][0]}
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
+          {/* Cinematic overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-luxury-black via-luxury-black/50 to-transparent" />
+        </div>
+
+        {/* Info */}
+        <div className="px-8 pb-8 -mt-24 relative z-10 flex flex-col flex-grow">
+          <h3 className="font-display text-2xl text-soft-ivory mb-1 drop-shadow-md">
+            {founder.name}
+          </h3>
+          <p className="text-rose-gold/90 text-xs tracking-widest uppercase mb-4 drop-shadow-md font-medium">
+            {founder.role}
+          </p>
+          <div className="text-soft-ivory/80 text-sm leading-relaxed font-light mb-4 drop-shadow-sm flex-grow space-y-3">
+            <p>{founder.shortBio}</p>
+            {expanded && (
+              <div className="animate-fade-in space-y-3 pt-2">
+                <p>{founder.longBio}</p>
+              </div>
+            )}
+          </div>
+          <button
+            onClick={() => setExpanded(!expanded)}
+            className="self-start mt-2 text-rose-gold hover:text-soft-ivory transition-colors text-xs font-medium uppercase tracking-widest border-b border-rose-gold/30 hover:border-soft-ivory/50 pb-1"
+          >
+            {expanded ? 'Read Less' : 'Read More'}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default function Founders() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -42,10 +114,15 @@ export default function Founders() {
       ref={sectionRef}
       id="founders"
       className="relative section-spacing overflow-hidden"
-      style={{ background: 'linear-gradient(180deg, #050505 0%, #110e0e 50%, #050505 100%)' }}
+      style={{ 
+        backgroundImage: `linear-gradient(180deg, rgba(5, 5, 5, 0.95) 0%, rgba(17, 14, 14, 0.3) 50%, rgba(5, 5, 5, 0.95) 100%), url(${visionariesBg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed'
+      }}
     >
-      <div className="section-container">
-        <SectionTitle eyebrow="The Visionaries">
+      <div className="section-container relative z-10">
+        <SectionTitle eyebrow="Meet Our Founders">
           Built By <span className="text-gradient-rose">Passion</span>.
           <br />
           Driven By Purpose.
@@ -54,37 +131,7 @@ export default function Founders() {
         {/* Founders Grid */}
         <div className="founders-grid grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-20">
           {FOUNDERS.map((founder, i) => (
-            <div key={i} className="founder-card group">
-              <div className="relative rounded-2xl overflow-hidden border border-white/[0.06] bg-white/[0.02]">
-                {/* Portrait placeholder */}
-                <div className="aspect-[3/4] relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-dark-velvet via-charcoal to-dark-velvet">
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-28 h-28 rounded-full border-2 border-rose-gold/20 flex items-center justify-center group-hover:border-rose-gold/40 transition-colors duration-500">
-                        <span className="font-display text-3xl text-rose-gold/60">
-                          {founder.name.split(' ')[0][0]}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  {/* Cinematic overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-luxury-black via-luxury-black/50 to-transparent" />
-                </div>
-
-                {/* Info */}
-                <div className="p-8 -mt-20 relative z-10">
-                  <h3 className="font-display text-2xl text-soft-ivory mb-1">
-                    {founder.name}
-                  </h3>
-                  <p className="text-rose-gold/70 text-xs tracking-widest uppercase mb-4">
-                    {founder.role}
-                  </p>
-                  <p className="text-soft-ivory/40 text-sm leading-relaxed font-light">
-                    {founder.bio}
-                  </p>
-                </div>
-              </div>
-            </div>
+            <FounderCard key={i} founder={founder} />
           ))}
         </div>
 
