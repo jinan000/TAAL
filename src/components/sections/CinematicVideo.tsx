@@ -1,6 +1,7 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Volume2, VolumeX, Play, Pause } from 'lucide-react';
 import introVideo from '../../assets/intro.mp4';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -9,6 +10,10 @@ export default function CinematicVideo() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
   const textOverlayRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const [isMuted, setIsMuted] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(true);
 
   useEffect(() => {
     if (!sectionRef.current || !videoContainerRef.current || !textOverlayRef.current) return;
@@ -43,7 +48,6 @@ export default function CinematicVideo() {
         }
       );
 
-
       // Bottom Section Reveal
       gsap.from('.cv-bottom-reveal', {
         opacity: 0,
@@ -61,6 +65,38 @@ export default function CinematicVideo() {
 
     return () => ctx.revert();
   }, []);
+
+  const toggleMute = () => {
+    if (!videoRef.current) return;
+    const nextMuted = !isMuted;
+    videoRef.current.muted = nextMuted;
+    setIsMuted(nextMuted);
+    if (!nextMuted && videoRef.current.paused) {
+      videoRef.current.play().catch(() => {});
+      setIsPlaying(true);
+    }
+  };
+
+  const togglePlay = () => {
+    if (!videoRef.current) return;
+    if (isPlaying) {
+      videoRef.current.pause();
+      setIsPlaying(false);
+    } else {
+      videoRef.current.play().catch(() => {});
+      setIsPlaying(true);
+    }
+  };
+
+  const handleWatchJourney = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = false;
+      setIsMuted(false);
+      videoRef.current.play().catch(() => {});
+      setIsPlaying(true);
+    }
+    videoContainerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  };
 
   return (
     <section 
@@ -114,13 +150,17 @@ export default function CinematicVideo() {
 
             {/* CTA Buttons */}
             <div className="cv-bottom-reveal flex flex-col sm:flex-row items-start gap-6 pt-8">
-              <button className="group relative px-8 py-4 rounded-full overflow-hidden bg-white/5 backdrop-blur-md border border-rose-gold/30 hover:border-rose-gold/60 transition-colors duration-500 w-full sm:w-auto">
+              <button 
+                onClick={handleWatchJourney}
+                className="group relative px-8 py-4 rounded-full overflow-hidden bg-white/5 backdrop-blur-md border border-rose-gold/30 hover:border-rose-gold/60 transition-colors duration-500 w-full sm:w-auto cursor-pointer"
+              >
                 <div className="absolute inset-0 bg-gradient-to-r from-rose-gold/0 via-rose-gold/10 to-rose-gold/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-md" />
-                <span className="relative z-10 text-soft-ivory font-medium tracking-wide uppercase text-sm">
-                  Watch Our Journey
+                <span className="relative z-10 text-soft-ivory font-medium tracking-wide uppercase text-sm flex items-center justify-center gap-2">
+                  <Volume2 className="w-4 h-4 text-rose-gold" />
+                  Watch Our Journey (With Sound)
                 </span>
               </button>
-              <button className="group relative px-8 py-4 rounded-full overflow-hidden w-full sm:w-auto shadow-[0_0_30px_rgba(207,159,114,0.2)]">
+              <button className="group relative px-8 py-4 rounded-full overflow-hidden w-full sm:w-auto shadow-[0_0_30px_rgba(207,159,114,0.2)] cursor-pointer">
                 <div className="absolute inset-0 bg-gradient-to-r from-[#d4af37] via-[#e5c158] to-[#cf9f72]" />
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" />
                 <span className="relative z-10 text-black font-semibold tracking-wide uppercase text-sm">
@@ -136,17 +176,18 @@ export default function CinematicVideo() {
           {/* Video Wrapper */}
           <div 
             ref={videoContainerRef}
-            className="relative w-[90%] max-w-[320px] md:max-w-[400px] aspect-[9/16] rounded-[2rem] p-[2px] overflow-hidden shadow-[0_0_80px_rgba(207,159,114,0.1)]"
+            className="group relative w-[90%] max-w-[320px] md:max-w-[400px] aspect-[9/16] rounded-[2rem] p-[2px] overflow-hidden shadow-[0_0_80px_rgba(207,159,114,0.1)]"
             style={{
               background: 'linear-gradient(135deg, rgba(207,159,114,0.3) 0%, rgba(207,159,114,0.05) 50%, rgba(207,159,114,0.1) 100%)'
             }}
           >
             <div className="relative w-full h-full rounded-[2rem] overflow-hidden bg-black/50 backdrop-blur-sm">
               <video 
+                ref={videoRef}
                 src={introVideo}
-                className="w-full h-full object-cover opacity-70 mix-blend-lighten"
+                className="w-full h-full object-cover opacity-90 transition-opacity duration-300"
                 autoPlay
-                muted
+                muted={isMuted}
                 loop
                 playsInline
               />
@@ -155,6 +196,59 @@ export default function CinematicVideo() {
               <div className="absolute inset-0 border border-white/5 rounded-[2rem] pointer-events-none" />
               <div className="absolute inset-0 shadow-[inset_0_0_100px_rgba(5,5,5,0.8)] pointer-events-none" />
 
+              {/* Floating Sound Toggle Control */}
+              <div className="absolute top-4 right-4 z-20 flex items-center gap-2">
+                <button
+                  onClick={toggleMute}
+                  title={isMuted ? "Unmute Audio" : "Mute Audio"}
+                  className="flex items-center gap-2 px-3.5 py-2 rounded-full bg-black/60 backdrop-blur-md border border-rose-gold/40 text-soft-ivory hover:bg-rose-gold/20 transition-all duration-300 shadow-lg cursor-pointer group/btn"
+                >
+                  {isMuted ? (
+                    <>
+                      <VolumeX className="w-5 h-5 text-rose-gold animate-pulse" />
+                      <span className="text-xs font-medium text-rose-gold tracking-wide">Sound Off</span>
+                    </>
+                  ) : (
+                    <>
+                      <Volume2 className="w-5 h-5 text-emerald-400" />
+                      <span className="text-xs font-medium text-emerald-400 tracking-wide">Sound On</span>
+                    </>
+                  )}
+                </button>
+              </div>
+
+              {/* Center Play/Pause & Sound Control Overlay on hover */}
+              <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="flex gap-4 items-center">
+                  <button
+                    onClick={togglePlay}
+                    title={isPlaying ? "Pause" : "Play"}
+                    className="p-4 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-white hover:scale-110 hover:bg-rose-gold/30 transition-all duration-300 shadow-xl cursor-pointer"
+                  >
+                    {isPlaying ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6 ml-0.5" />}
+                  </button>
+
+                  <button
+                    onClick={toggleMute}
+                    title={isMuted ? "Unmute Sound" : "Mute Sound"}
+                    className="p-4 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-white hover:scale-110 hover:bg-rose-gold/30 transition-all duration-300 shadow-xl cursor-pointer"
+                  >
+                    {isMuted ? <VolumeX className="w-6 h-6 text-rose-gold" /> : <Volume2 className="w-6 h-6 text-emerald-400" />}
+                  </button>
+                </div>
+              </div>
+
+              {/* Bottom Mute Badge Banner if Muted */}
+              {isMuted && (
+                <div 
+                  onClick={toggleMute}
+                  className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 px-4 py-2 rounded-full bg-black/80 backdrop-blur-md border border-rose-gold/40 text-soft-ivory text-xs font-medium tracking-wide flex items-center gap-2 cursor-pointer hover:scale-105 transition-transform duration-300 shadow-2xl"
+                >
+                  <Volume2 className="w-4 h-4 text-rose-gold animate-bounce" />
+                  <span>Click to enable sound</span>
+                </div>
+              )}
+
             </div>
           </div>
         </div>
@@ -162,3 +256,4 @@ export default function CinematicVideo() {
     </section>
   );
 }
+
