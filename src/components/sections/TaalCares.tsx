@@ -87,7 +87,7 @@ export default function TaalCares() {
         {/* Main content */}
         <div className="cares-content max-w-3xl mx-auto text-center mb-20">
           <p className="text-lg md:text-xl text-soft-ivory/60 font-light leading-relaxed mb-8">
-            At Taal, we believe dance is more than just movement — it is a way to connect, inspire, and give back to the community. Through <em className="text-soft-ivory">Taal Cares</em>, we create opportunities to spread joy, celebrate culture, and make a positive impact through dance.
+            At Taal, we believe dance is more than just movement — it is a way to connect, inspire, and give back to the community. Through <em className="text-soft-ivory not-italic font-medium whitespace-nowrap">TAAL Cares</em>, we create opportunities to spread joy, celebrate culture, and make a positive impact through dance.
           </p>
         </div>
 

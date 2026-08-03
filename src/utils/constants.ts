@@ -17,10 +17,9 @@ import imgCommunity from '../assets/gallery/community.png';
 export const NAV_LINKS = [
   { label: 'Home', href: '#hero' },
   { label: 'About', href: '#introduction' },
-  { label: 'Classes', href: '#classes' },
+  { label: 'Classes', href: '/classes' },
   { label: 'Founders', href: '#founders' },
   { label: 'Gallery', href: '#gallery' },
-  { label: 'Testimonials', href: '#testimonials' },
   { label: 'TAAL Cares', href: '/taal-cares' },
   { label: 'FAQ', href: '/faq' },
   { label: 'Contact', href: '#contact' },

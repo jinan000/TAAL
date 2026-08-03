@@ -15,6 +15,7 @@ import ScrollProgress from './components/ui/ScrollProgress';
 import HomePage from './pages/HomePage';
 import FaqPage from './pages/FaqPage';
 import TaalCaresPage from './pages/TaalCaresPage';
+import ClassesPage from './pages/ClassesPage';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -56,6 +57,7 @@ export default function App() {
         <main>
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/classes" element={<ClassesPage />} />
             <Route path="/faq" element={<FaqPage />} />
             <Route path="/taal-cares" element={<TaalCaresPage />} />
           </Routes>

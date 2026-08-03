@@ -7,6 +7,7 @@ import MagneticButton from '../ui/MagneticButton';
 import logoImage from '../../assets/Taal-Logopng.png';
 
 const toTitleCase = (str: string) => {
+  if (str.toUpperCase().includes('TAAL') || str === 'FAQ') return str;
   return str.replace(
     /\w\S*/g,
     (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
@@ -136,7 +137,7 @@ export default function Header() {
                   key={link.href}
                   href={link.href}
                   onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
-                  className={`relative px-2 py-2 text-[15px] font-body transition-colors duration-300 ${
+                  className={`relative px-2 py-2 text-[15px] font-body whitespace-nowrap transition-colors duration-300 ${
                     active
                       ? 'text-rose-gold font-medium'
                       : 'text-soft-ivory/70 hover:text-soft-ivory'

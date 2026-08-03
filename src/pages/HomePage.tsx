@@ -3,7 +3,6 @@ import AboutUs from '../components/sections/AboutUs';
 import Introduction from '../components/sections/Introduction';
 import CinematicVideo from '../components/sections/CinematicVideo';
 import WhyChoose from '../components/sections/WhyChoose';
-import Classes from '../components/sections/Classes';
 import Founders from '../components/sections/Founders';
 import Gallery from '../components/sections/Gallery';
 import Testimonials from '../components/sections/Testimonials';
@@ -17,7 +16,6 @@ export default function HomePage() {
       <Introduction />
       <CinematicVideo />
       <WhyChoose />
-      <Classes />
       <Founders />
       <Gallery />
       <Testimonials />
@@ -25,4 +23,5 @@ export default function HomePage() {
     </>
   );
 }
+
 
