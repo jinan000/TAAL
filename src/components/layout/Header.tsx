@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { NAV_LINKS } from '../../utils/constants';
 import MagneticButton from '../ui/MagneticButton';
 import logoImage from '../../assets/Taal-Logopng.png';
@@ -17,6 +18,9 @@ export default function Header() {
   const [isVisible, setIsVisible] = useState(true);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
+
+  const location = useLocation();
+  const navigate = useNavigate();
 
   // Scroll detection for shrink effect and visibility
   useEffect(() => {
@@ -42,8 +46,10 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll);
   }, [isMobileOpen]);
 
-  // Active section observer
+  // Active section observer (only on home page)
   useEffect(() => {
+    if (location.pathname !== '/') return;
+
     const sections = document.querySelectorAll('section[id]');
     const observer = new IntersectionObserver(
       (entries) => {
@@ -57,7 +63,7 @@ export default function Header() {
     );
     sections.forEach((s) => observer.observe(s));
     return () => observer.disconnect();
-  }, []);
+  }, [location.pathname]);
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -67,8 +73,32 @@ export default function Header() {
 
   const handleNavClick = (href: string) => {
     setIsMobileOpen(false);
-    const target = document.querySelector(href);
-    target?.scrollIntoView({ behavior: 'smooth' });
+
+    if (href.startsWith('/')) {
+      navigate(href);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (href.startsWith('#')) {
+      if (location.pathname !== '/') {
+        navigate('/');
+        setTimeout(() => {
+          const target = document.querySelector(href);
+          target?.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      } else {
+        const target = document.querySelector(href);
+        target?.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
+  const isLinkActive = (href: string) => {
+    if (href.startsWith('/')) {
+      return location.pathname === href;
+    }
+    if (location.pathname !== '/') {
+      return false;
+    }
+    return href.startsWith('#') && activeSection === href.slice(1);
   };
 
   return (
@@ -88,7 +118,7 @@ export default function Header() {
           <a
             href="#hero"
             onClick={(e) => { e.preventDefault(); handleNavClick('#hero'); }}
-            className="flex items-center group relative z-10 flex-shrink-0"
+            className="flex items-center group relative z-10 flex-shrink-0 cursor-pointer"
           >
             <img 
               src={logoImage} 
@@ -99,27 +129,30 @@ export default function Header() {
 
           {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center gap-4 xl:gap-8 absolute left-1/2 -translate-x-1/2">
-            {NAV_LINKS.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
-                className={`relative px-2 py-2 text-[15px] font-body transition-colors duration-300 ${
-                  activeSection === link.href.slice(1)
-                    ? 'text-rose-gold'
-                    : 'text-soft-ivory/70 hover:text-soft-ivory'
-                }`}
-              >
-                {toTitleCase(link.label)}
-                {activeSection === link.href.slice(1) && (
-                  <motion.div
-                    layoutId="activeNav"
-                    className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-[2px] bg-gradient-to-r from-transparent via-rose-gold to-transparent shadow-[0_0_10px_rgba(216,167,160,0.8)]"
-                    transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                  />
-                )}
-              </a>
-            ))}
+            {NAV_LINKS.map((link) => {
+              const active = isLinkActive(link.href);
+              return (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
+                  className={`relative px-2 py-2 text-[15px] font-body transition-colors duration-300 ${
+                    active
+                      ? 'text-rose-gold font-medium'
+                      : 'text-soft-ivory/70 hover:text-soft-ivory'
+                  }`}
+                >
+                  {toTitleCase(link.label)}
+                  {active && (
+                    <motion.div
+                      layoutId="activeNav"
+                      className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-[2px] bg-gradient-to-r from-transparent via-rose-gold to-transparent shadow-[0_0_10px_rgba(216,167,160,0.8)]"
+                      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                    />
+                  )}
+                </a>
+              );
+            })}
           </nav>
 
           {/* CTA + Mobile Toggle */}
@@ -136,7 +169,7 @@ export default function Header() {
 
             {/* Mobile Hamburger */}
             <button
-              className="lg:hidden text-soft-ivory p-2 rounded-full border border-white/10 hover:bg-white/5 transition-colors"
+              className="lg:hidden text-soft-ivory p-2 rounded-full border border-white/10 hover:bg-white/5 transition-colors cursor-pointer"
               onClick={() => setIsMobileOpen(!isMobileOpen)}
               aria-label="Toggle menu"
             >
@@ -191,3 +224,4 @@ export default function Header() {
     </>
   );
 }
+

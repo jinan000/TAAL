@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Lenis from 'lenis';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -10,20 +11,10 @@ import Footer from './components/layout/Footer';
 // UI
 import ScrollProgress from './components/ui/ScrollProgress';
 
-// Sections
-import Hero from './components/sections/Hero';
-import AboutUs from './components/sections/AboutUs';
-import Introduction from './components/sections/Introduction';
-import CinematicVideo from './components/sections/CinematicVideo';
-import WhyChoose from './components/sections/WhyChoose';
-import Classes from './components/sections/Classes';
-import Founders from './components/sections/Founders';
-import Gallery from './components/sections/Gallery';
-import Testimonials from './components/sections/Testimonials';
-import TaalCares from './components/sections/TaalCares';
-import FAQ from './components/sections/FAQ';
-import JoinTeam from './components/sections/JoinTeam';
-import Contact from './components/sections/Contact';
+// Pages
+import HomePage from './pages/HomePage';
+import FaqPage from './pages/FaqPage';
+import TaalCaresPage from './pages/TaalCaresPage';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -53,32 +44,28 @@ export default function App() {
   }, []);
 
   return (
-    <div className="relative">
-      {/* Scroll Progress Bar */}
-      <ScrollProgress />
+    <BrowserRouter>
+      <div className="relative">
+        {/* Scroll Progress Bar */}
+        <ScrollProgress />
 
-      {/* Header */}
-      <Header />
+        {/* Header */}
+        <Header />
 
-      {/* Main Content — Single Page Storytelling */}
-      <main>
-        <Hero />
-        <AboutUs />
-        <Introduction />
-        <CinematicVideo />
-        <WhyChoose />
-        <Classes />
-        <Founders />
-        <Gallery />
-        <Testimonials />
-        <TaalCares />
-        <FAQ />
-        <JoinTeam />
-        <Contact />
-      </main>
+        {/* Main Routes */}
+        <main>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/faq" element={<FaqPage />} />
+            <Route path="/taal-cares" element={<TaalCaresPage />} />
+          </Routes>
+        </main>
 
-      {/* Footer */}
-      <Footer />
-    </div>
+        {/* Footer */}
+        <Footer />
+      </div>
+    </BrowserRouter>
   );
 }
+
+

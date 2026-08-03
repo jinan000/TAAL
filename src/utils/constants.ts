@@ -21,7 +21,8 @@ export const NAV_LINKS = [
   { label: 'Founders', href: '#founders' },
   { label: 'Gallery', href: '#gallery' },
   { label: 'Testimonials', href: '#testimonials' },
-  { label: 'FAQ', href: '#faq' },
+  { label: 'TAAL Cares', href: '/taal-cares' },
+  { label: 'FAQ', href: '/faq' },
   { label: 'Contact', href: '#contact' },
 ] as const;
 
