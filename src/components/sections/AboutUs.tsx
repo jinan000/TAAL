@@ -243,9 +243,9 @@ export default function AboutUs() {
         
         {/* Top Section */}
         <div className="au-reveal flex flex-col items-center text-center mb-16">
-          <p className="text-rose-gold/60 uppercase tracking-[0.3em] text-xs md:text-sm font-medium mb-4">
+          <h3 className="font-display text-rose-gold/90 text-3xl md:text-5xl font-medium leading-tight mb-4">
             About Us
-          </p>
+          </h3>
           
           <div className="flex items-center gap-4 mb-6">
             <div className="w-12 md:w-24 h-[1px] bg-gradient-to-r from-transparent to-rose-gold/40" />
@@ -253,7 +253,7 @@ export default function AboutUs() {
             <div className="w-12 md:w-24 h-[1px] bg-gradient-to-l from-transparent to-rose-gold/40" />
           </div>
 
-          <h2 className="font-display text-4xl md:text-6xl text-soft-ivory leading-tight mb-8">
+          <h2 className="font-body text-sm md:text-lg text-soft-ivory/80 uppercase tracking-[0.25em] leading-relaxed mb-8">
             More Than Dance. <br/>
             <span className="text-gradient-rose">A Way Of Life.</span>
           </h2>
