@@ -19,9 +19,10 @@ export default function TaalCares() {
         duration: 0.7,
         stagger: 0.12,
         ease: 'power2.out',
+        clearProps: 'opacity,transform',
         scrollTrigger: {
           trigger: '.cares-content',
-          start: 'top 80%',
+          start: 'top 95%',
         },
       });
       gsap.from('.cares-card', {
@@ -30,13 +31,22 @@ export default function TaalCares() {
         duration: 0.6,
         stagger: 0.1,
         ease: 'power2.out',
+        clearProps: 'opacity,transform',
         scrollTrigger: {
           trigger: '.cares-grid',
-          start: 'top 80%',
+          start: 'top 95%',
         },
       });
     }, sectionRef);
-    return () => ctx.revert();
+
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 150);
+
+    return () => {
+      clearTimeout(timer);
+      ctx.revert();
+    };
   }, []);
 
   const initiatives = [
@@ -65,13 +75,15 @@ export default function TaalCares() {
       className="relative section-spacing overflow-hidden"
       style={{ background: 'linear-gradient(180deg, #050505 0%, #1A1414 50%, #050505 100%)' }}
     >
+      {/* Background Image with soft opacity */}
       <div 
-        className="absolute inset-0 z-0 opacity-[0.35] bg-cover bg-center bg-no-repeat"
+        className="absolute inset-0 z-0 bg-cover bg-center bg-fixed opacity-[0.22] pointer-events-none"
         style={{ backgroundImage: `url(${bgImage})` }}
       />
+      {/* Gradient overlay for contrast and seamless edge blending */}
       <div 
-        className="absolute inset-0 z-0"
-        style={{ background: 'linear-gradient(180deg, #050505 0%, rgba(5,5,5,0.4) 20%, rgba(5,5,5,0.4) 80%, #050505 100%)' }}
+        className="absolute inset-0 z-0 pointer-events-none"
+        style={{ background: 'linear-gradient(180deg, #050505 0%, rgba(5,5,5,0.65) 25%, rgba(5,5,5,0.65) 75%, #050505 100%)' }}
       />
 
       {/* Warm ambient glow */}
@@ -86,7 +98,7 @@ export default function TaalCares() {
 
         {/* Main content */}
         <div className="cares-content max-w-3xl mx-auto text-center mb-20">
-          <p className="text-lg md:text-xl text-soft-ivory/60 font-light leading-relaxed mb-8">
+          <p className="text-lg md:text-xl text-soft-ivory/80 font-light leading-relaxed mb-8">
             At Taal, we believe dance is more than just movement — it is a way to connect, inspire, and give back to the community. Through <em className="text-soft-ivory not-italic font-medium whitespace-nowrap">TAAL Cares</em>, we create opportunities to spread joy, celebrate culture, and make a positive impact through dance.
           </p>
         </div>
@@ -96,7 +108,7 @@ export default function TaalCares() {
           {initiatives.map((item) => (
             <div
               key={item.title}
-              className="cares-card glass-panel p-8 rounded-2xl flex flex-col items-center text-center hover:-translate-y-2 transition-transform duration-500"
+              className="cares-card glass-panel bg-[#050505]/70 backdrop-blur-md p-8 rounded-2xl flex flex-col items-center text-center border border-white/[0.08] hover:border-rose-gold/30 hover:-translate-y-2 transition-all duration-500"
             >
               <div className="w-12 h-12 rounded-full bg-rose-gold/[0.08] border border-rose-gold/[0.12] flex items-center justify-center mb-5 shrink-0">
                 <Heart size={18} className="text-rose-gold" />
@@ -104,7 +116,7 @@ export default function TaalCares() {
               <h3 className="font-display text-xl text-soft-ivory mb-3">
                 {item.title}
               </h3>
-              <p className="text-soft-ivory/60 text-sm leading-relaxed font-light">
+              <p className="text-soft-ivory/70 text-sm leading-relaxed font-light">
                 {item.description}
               </p>
             </div>

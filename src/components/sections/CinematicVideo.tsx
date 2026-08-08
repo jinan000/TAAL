@@ -118,10 +118,10 @@ export default function CinematicVideo() {
           
           {/* Header */}
           <div className="cv-header">
-            <p className="cv-header-text text-rose-gold/60 uppercase tracking-[0.3em] text-sm mb-6 font-medium">
+            <h3 className="cv-header-text font-display text-rose-gold/90 text-3xl md:text-5xl font-medium leading-tight mb-4">
               Our Story
-            </p>
-            <h2 className="cv-header-text font-display text-4xl md:text-6xl text-soft-ivory leading-tight mb-8">
+            </h3>
+            <h2 className="cv-header-text font-body text-xs md:text-base text-soft-ivory/80 uppercase tracking-[0.25em] leading-relaxed mb-8">
               Experience The <br/>
               <span className="text-gradient-rose">Rhythm Of TAAL.</span>
             </h2>

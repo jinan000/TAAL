@@ -253,7 +253,7 @@ export default function AboutUs() {
             <div className="w-12 md:w-24 h-[1px] bg-gradient-to-l from-transparent to-rose-gold/40" />
           </div>
 
-          <h2 className="font-body text-sm md:text-lg text-soft-ivory/80 uppercase tracking-[0.25em] leading-relaxed mb-8">
+          <h2 className="font-body text-xs md:text-base text-soft-ivory/80 uppercase tracking-[0.25em] leading-relaxed mb-8">
             More Than Dance. <br/>
             <span className="text-gradient-rose">A Way Of Life.</span>
           </h2>

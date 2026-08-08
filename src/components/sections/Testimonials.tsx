@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Quote } from 'lucide-react';
 import SectionTitle from '../ui/SectionTitle';
 import { TESTIMONIALS } from '../../utils/constants';
+import voicesBg from '../../assets/voices_of_taal.jpeg';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -38,7 +39,16 @@ export default function Testimonials() {
       className="relative section-spacing overflow-hidden"
       style={{ background: 'linear-gradient(180deg, #050505 0%, #111111 50%, #050505 100%)' }}
     >
-      <div className="section-container">
+      <div 
+        className="absolute inset-0 z-0 opacity-[0.3] bg-cover bg-center bg-no-repeat pointer-events-none"
+        style={{ backgroundImage: `url(${voicesBg})` }}
+      />
+      <div 
+        className="absolute inset-0 z-0 pointer-events-none"
+        style={{ background: 'linear-gradient(180deg, #050505 0%, rgba(5,5,5,0.4) 25%, rgba(5,5,5,0.4) 75%, #050505 100%)' }}
+      />
+
+      <div className="section-container relative z-10">
         <SectionTitle eyebrow="Voices of TAAL">
           What Our Community{' '}
           <span className="text-gradient-rose">Says</span>
@@ -46,7 +56,7 @@ export default function Testimonials() {
       </div>
 
       {/* Continuous horizontal slider */}
-      <div className="overflow-hidden">
+      <div className="overflow-hidden relative z-10">
         <div
           className="flex gap-6 py-4"
           style={{
@@ -84,7 +94,7 @@ export default function Testimonials() {
       </div>
 
       {/* Community Counters */}
-      <div className="section-container mt-20">
+      <div className="section-container relative z-10 mt-20">
         <div className="community-counters flex flex-wrap justify-center gap-12 md:gap-20">
           {[
             { label: 'Happy Students', value: '2,500+' },

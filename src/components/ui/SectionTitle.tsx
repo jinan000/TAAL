@@ -49,13 +49,15 @@ export default function SectionTitle({
       } ${className}`}
     >
       {eyebrow && (
-        <p className="st-animate label-text mb-4 md:mb-6">{eyebrow}</p>
+        <h3 className="st-animate font-display text-rose-gold/90 text-3xl md:text-5xl font-medium leading-tight mb-4">
+          {eyebrow}
+        </h3>
       )}
-      <h2 className="st-animate font-display text-soft-ivory leading-[1.1]">
+      <h2 className="st-animate font-body text-xs md:text-base text-soft-ivory/80 uppercase tracking-[0.25em] leading-relaxed mb-6">
         {children}
       </h2>
       {subtitle && (
-        <p className="st-animate mt-6 max-w-2xl text-lg text-soft-ivory/50 font-light mx-auto leading-relaxed">
+        <p className="st-animate mt-4 max-w-2xl text-xs md:text-sm text-soft-ivory/60 font-light mx-auto leading-relaxed">
           {subtitle}
         </p>
       )}

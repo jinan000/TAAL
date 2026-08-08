@@ -41,13 +41,22 @@ export default function Classes() {
         duration: 0.6,
         stagger: 0.08,
         ease: 'power2.out',
+        clearProps: 'opacity,transform',
         scrollTrigger: {
           trigger: '.classes-carousel',
-          start: 'top 80%',
+          start: 'top 95%',
         },
       });
     }, sectionRef);
-    return () => ctx.revert();
+
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 150);
+
+    return () => {
+      clearTimeout(timer);
+      ctx.revert();
+    };
   }, []);
 
   return (
@@ -115,21 +124,21 @@ export default function Classes() {
             whileHover={{ y: -8 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="relative h-[480px] rounded-2xl overflow-hidden border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm group cursor-pointer">
+            <div className="relative h-[480px] rounded-2xl overflow-hidden border border-white/[0.08] bg-[#0d0909]/80 backdrop-blur-md group cursor-pointer">
               {/* Background Image */}
               {(cls as any).image && (
                 <img
                   src={(cls as any).image}
                   alt={cls.title}
-                  className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-105 group-hover:opacity-60 transition-all duration-700 ease-out"
+                  className="absolute inset-0 w-full h-full object-cover opacity-25 group-hover:scale-105 group-hover:opacity-40 transition-all duration-700 ease-out"
                 />
               )}
-              {/* Dark overlay so text is readable */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/30" />
+              {/* Dark gradient overlay engineered for top-to-bottom text readability */}
+              <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/90 via-[#050505]/75 to-[#050505]/90 pointer-events-none" />
 
               {/* Background gradient unique per card */}
               <div
-                className="absolute inset-0 opacity-20 transition-opacity duration-500 group-hover:opacity-30"
+                className="absolute inset-0 opacity-20 transition-opacity duration-500 group-hover:opacity-35 pointer-events-none"
                 style={{
                   background: `radial-gradient(ellipse at ${30 + (i % 3) * 20}% ${40 + (i % 2) * 20}%, ${cls.color}40 0%, transparent 70%)`,
                 }}
