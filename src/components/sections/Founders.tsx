@@ -113,12 +113,9 @@ export default function Founders() {
     <section
       ref={sectionRef}
       id="founders"
-      className="relative section-spacing overflow-hidden"
+      className="relative section-spacing overflow-hidden bg-cover bg-center bg-scroll md:bg-fixed"
       style={{ 
-        backgroundImage: `linear-gradient(180deg, rgba(5, 5, 5, 0.95) 0%, rgba(17, 14, 14, 0.3) 50%, rgba(5, 5, 5, 0.95) 100%), url(${visionariesBg})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundAttachment: 'fixed'
+        backgroundImage: `linear-gradient(180deg, rgba(5, 5, 5, 0.95) 0%, rgba(17, 14, 14, 0.3) 50%, rgba(5, 5, 5, 0.95) 100%), url(${visionariesBg})`
       }}
     >
       <div className="section-container relative z-10">

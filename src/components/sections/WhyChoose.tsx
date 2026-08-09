@@ -63,12 +63,9 @@ export default function WhyChoose() {
     <section
       ref={sectionRef}
       id="why-choose"
-      className="relative section-spacing overflow-hidden"
+      className="relative section-spacing overflow-hidden bg-cover bg-center bg-scroll md:bg-fixed"
       style={{ 
-        backgroundImage: `linear-gradient(180deg, rgba(5, 5, 5, 0.9) 0%, rgba(17, 17, 17, 0.3) 50%, rgba(5, 5, 5, 0.9) 100%), url(${whyChooseBg})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundAttachment: 'fixed'
+        backgroundImage: `linear-gradient(180deg, rgba(5, 5, 5, 0.9) 0%, rgba(17, 17, 17, 0.3) 50%, rgba(5, 5, 5, 0.9) 100%), url(${whyChooseBg})`
       }}
     >
       <div className="section-container relative z-10">

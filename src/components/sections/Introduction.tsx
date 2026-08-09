@@ -33,16 +33,13 @@ export default function Introduction() {
     <section
       ref={sectionRef}
       id="introduction"
-      className="relative pt-8 pb-16 md:section-spacing overflow-hidden"
+      className="relative pt-8 pb-16 md:section-spacing overflow-hidden bg-cover bg-center bg-scroll md:bg-fixed"
       style={{
         backgroundImage: `url(${introBg})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundAttachment: 'fixed',
       }}
     >
       {/* Dark overlay for readability */}
-      <div className="absolute inset-0 z-0 bg-cover bg-center bg-fixed opacity-[0.35]"
+      <div className="absolute inset-0 z-0 bg-cover bg-center bg-scroll md:bg-fixed opacity-[0.35]"
         style={{ 
           backgroundImage: `url(${introBg})`,
           filter: 'contrast(1.2) saturate(1.2)' 
