@@ -345,15 +345,22 @@ export default function AboutUs() {
 
         {/* Core Values Section */}
         <div className="w-full flex flex-col items-center mb-16">
-          <div className="au-reveal flex items-center justify-center w-full mb-8">
-            <div className="w-full max-w-[100px] h-[1px] bg-gradient-to-r from-transparent to-rose-gold/20" />
-            <h3 className="px-6 text-soft-ivory tracking-[0.2em] uppercase text-xs">Our Core Values</h3>
-            <div className="w-full max-w-[100px] h-[1px] bg-gradient-to-l from-transparent to-rose-gold/20" />
+          <div className="au-reveal flex items-center justify-center w-full max-w-xs sm:max-w-sm md:max-w-md mx-auto mb-8 px-2">
+            <div className="flex-1 h-[1px] bg-gradient-to-r from-transparent to-rose-gold/30" />
+            <h3 className="px-4 text-soft-ivory tracking-[0.2em] uppercase text-xs text-center pl-[calc(1rem+0.2em)] whitespace-nowrap">
+              Our Core Values
+            </h3>
+            <div className="flex-1 h-[1px] bg-gradient-to-l from-transparent to-rose-gold/30" />
           </div>
 
-          <div className="au-values w-full grid grid-cols-2 md:flex md:flex-wrap md:justify-center gap-6 md:gap-10 max-w-sm md:max-w-none mx-auto">
-            {CORE_VALUES.map((value) => (
-              <div key={value.title} className="au-value flex flex-col items-center text-center px-2 group">
+          <div className="au-values w-full grid grid-cols-2 md:flex md:flex-wrap md:justify-center gap-6 md:gap-10 max-w-sm md:max-w-none mx-auto justify-items-center">
+            {CORE_VALUES.map((value, index) => (
+              <div 
+                key={value.title} 
+                className={`au-value flex flex-col items-center text-center px-2 group ${
+                  index === CORE_VALUES.length - 1 ? 'col-span-2 md:col-span-1' : ''
+                }`}
+              >
                 <div className="text-rose-gold/60 group-hover:text-rose-gold transition-colors duration-500 mb-3 drop-shadow-[0_0_8px_rgba(207,159,114,0)] group-hover:drop-shadow-[0_0_12px_rgba(207,159,114,0.4)]">
                   {value.icon}
                 </div>

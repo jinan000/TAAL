@@ -58,7 +58,7 @@ export default function App() {
   return (
     <FreeTrialModalProvider>
       <BrowserRouter>
-        <div className="relative">
+        <div className="relative w-full max-w-[100vw] overflow-x-hidden">
           {/* Scroll Progress Bar */}
           <ScrollProgress />
 

@@ -117,7 +117,7 @@ export default function Classes() {
       <div
         ref={scrollContainerRef}
         onScroll={checkScroll}
-        className="classes-carousel flex gap-6 overflow-x-auto pb-8 px-[max(1.5rem,calc((100vw-1400px)/2+1.5rem))] snap-x snap-mandatory scrollbar-hide"
+        className="classes-carousel flex gap-6 overflow-x-auto pb-8 px-6 md:px-[max(1.5rem,calc((100vw-1400px)/2+1.5rem))] snap-x snap-mandatory scrollbar-hide"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         {CLASSES.map((cls, i) => (

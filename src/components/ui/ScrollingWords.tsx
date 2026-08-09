@@ -22,7 +22,7 @@ export default function ScrollingWords() {
 
   return (
     <div 
-      className="relative w-full max-w-[100vw] overflow-hidden py-4 mt-2 mb-6 h-20 flex items-center justify-center"
+      className="relative w-full max-w-full overflow-hidden py-4 mt-2 mb-6 h-20 flex items-center justify-center"
       style={{ WebkitMaskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent)' }}
     >
       {WORDS.map((word, i) => {
