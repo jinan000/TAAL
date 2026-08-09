@@ -33,7 +33,7 @@ export default function Introduction() {
     <section
       ref={sectionRef}
       id="introduction"
-      className="relative section-spacing overflow-hidden"
+      className="relative pt-8 pb-16 md:section-spacing overflow-hidden"
       style={{
         backgroundImage: `url(${introBg})`,
         backgroundSize: 'cover',

@@ -198,7 +198,7 @@ export default function AboutUs() {
   return (
     <section 
       ref={sectionRef}
-      className="relative w-full min-h-screen flex flex-col items-center justify-center bg-[#050505] py-24 md:py-32 overflow-x-hidden"
+      className="relative w-full min-h-0 md:min-h-screen flex flex-col items-center justify-center bg-[#050505] pt-16 pb-6 md:py-32 overflow-x-hidden"
     >
       {/* --- Ambient Background Layers --- */}
       <div className="absolute inset-0 pointer-events-none z-0">
