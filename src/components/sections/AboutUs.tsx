@@ -32,12 +32,26 @@ const ExpandableBlock = ({ preview, full }: { preview: React.ReactNode; full: Re
   const [expanded, setExpanded] = useState(false);
 
   useEffect(() => {
-    // Recalculate GSAP ScrollTrigger and Lenis smooth scroll boundaries on expansion
-    const timer = setTimeout(() => {
-      ScrollTrigger.refresh();
-      window.dispatchEvent(new Event('resize'));
-    }, 50);
-    return () => clearTimeout(timer);
+    // Recalculate Lenis scroll limit & GSAP ScrollTrigger boundaries on expansion/collapse
+    const refreshAll = () => {
+      if (typeof window !== 'undefined') {
+        if ((window as any).lenis) {
+          (window as any).lenis.resize();
+        }
+        ScrollTrigger.refresh();
+      }
+    };
+
+    refreshAll();
+    const t1 = setTimeout(refreshAll, 50);
+    const t2 = setTimeout(refreshAll, 150);
+    const t3 = setTimeout(refreshAll, 300);
+
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+    };
   }, [expanded]);
 
   return (
@@ -46,8 +60,9 @@ const ExpandableBlock = ({ preview, full }: { preview: React.ReactNode; full: Re
         {expanded ? full : preview}
       </div>
       <button 
+        type="button"
         onClick={() => setExpanded(!expanded)} 
-        className="mt-4 text-rose-gold hover:text-soft-ivory transition-colors text-xs font-medium uppercase tracking-widest border-b border-rose-gold/30 pb-1 cursor-pointer"
+        className="mt-4 text-rose-gold hover:text-soft-ivory transition-colors text-xs font-medium uppercase tracking-widest border-b border-rose-gold/30 pb-1 cursor-pointer select-none"
       >
         {expanded ? 'Read Less' : 'Read More'}
       </button>
@@ -208,7 +223,7 @@ export default function AboutUs() {
   return (
     <section 
       ref={sectionRef}
-      className="relative w-full min-h-0 md:min-h-screen flex flex-col items-center justify-center bg-[#050505] pt-16 pb-6 md:py-32 overflow-x-hidden"
+      className="relative w-full min-h-0 md:min-h-screen flex flex-col items-center justify-center bg-[#050505] pt-16 pb-6 md:py-32"
     >
       {/* --- Ambient Background Layers --- */}
       <div className="absolute inset-0 pointer-events-none z-0">
@@ -336,14 +351,14 @@ export default function AboutUs() {
             <div className="w-full max-w-[100px] h-[1px] bg-gradient-to-l from-transparent to-rose-gold/20" />
           </div>
 
-          <div className="au-values w-full flex flex-wrap justify-center gap-6 md:gap-10">
+          <div className="au-values w-full grid grid-cols-2 md:flex md:flex-wrap md:justify-center gap-6 md:gap-10 max-w-sm md:max-w-none mx-auto">
             {CORE_VALUES.map((value) => (
-              <div key={value.title} className="au-value flex flex-col items-center group">
+              <div key={value.title} className="au-value flex flex-col items-center text-center px-2 group">
                 <div className="text-rose-gold/60 group-hover:text-rose-gold transition-colors duration-500 mb-3 drop-shadow-[0_0_8px_rgba(207,159,114,0)] group-hover:drop-shadow-[0_0_12px_rgba(207,159,114,0.4)]">
                   {value.icon}
                 </div>
                 <h4 className="text-soft-ivory text-xs uppercase tracking-wider mb-2">{value.title}</h4>
-                <p className="text-soft-ivory/50 text-[10px] tracking-wide text-center uppercase max-w-[160px] leading-relaxed">
+                <p className="text-soft-ivory/50 text-[10px] tracking-wide text-center uppercase max-w-[160px] leading-relaxed font-light">
                   {value.desc}
                 </p>
               </div>

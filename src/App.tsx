@@ -33,6 +33,7 @@ export default function App() {
       smoothWheel: true,
     });
     lenisRef.current = lenis;
+    (window as any).lenis = lenis;
 
     // Sync Lenis with GSAP ScrollTrigger
     lenis.on('scroll', ScrollTrigger.update);
@@ -41,7 +42,14 @@ export default function App() {
     });
     gsap.ticker.lagSmoothing(0);
 
+    const handleResize = () => {
+      lenis.resize();
+    };
+    window.addEventListener('resize', handleResize);
+
     return () => {
+      window.removeEventListener('resize', handleResize);
+      delete (window as any).lenis;
       lenis.destroy();
       gsap.ticker.remove(lenis.raf);
     };
