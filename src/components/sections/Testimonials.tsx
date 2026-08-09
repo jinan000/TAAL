@@ -16,6 +16,8 @@ export default function Testimonials() {
   const [startX, setStartX] = useState(0);
   const [scrollLeftState, setScrollLeftState] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [isManualScrolling, setIsManualScrolling] = useState(false);
+  const manualScrollTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // 4x duplicated testimonials for seamless infinite horizontal scrolling
   const allTestimonials = [...TESTIMONIALS, ...TESTIMONIALS, ...TESTIMONIALS, ...TESTIMONIALS];
@@ -52,7 +54,7 @@ export default function Testimonials() {
     let animationFrameId: number;
 
     const autoScroll = () => {
-      if (scrollRef.current && !isHovered && !isMouseDown) {
+      if (scrollRef.current && !isHovered && !isMouseDown && !isManualScrolling) {
         scrollRef.current.scrollLeft += 1.2; // Speed of auto scroll
 
         const { scrollLeft, scrollWidth } = scrollRef.current;
@@ -71,17 +73,32 @@ export default function Testimonials() {
     };
 
     animationFrameId = requestAnimationFrame(autoScroll);
-    return () => cancelAnimationFrame(animationFrameId);
-  }, [isHovered, isMouseDown]);
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      if (manualScrollTimerRef.current) clearTimeout(manualScrollTimerRef.current);
+    };
+  }, [isHovered, isMouseDown, isManualScrolling]);
 
   // Button manual scroll
   const handleScroll = (direction: 'left' | 'right') => {
     if (!scrollRef.current) return;
-    const scrollAmount = 380;
-    scrollRef.current.scrollBy({
+    
+    // Pause auto scroll during manual arrow navigation so RAF doesn't cancel smooth scroll
+    setIsManualScrolling(true);
+    if (manualScrollTimerRef.current) clearTimeout(manualScrollTimerRef.current);
+
+    const container = scrollRef.current;
+    const firstCard = container.querySelector('.flex-shrink-0') as HTMLElement;
+    const scrollAmount = firstCard ? firstCard.offsetWidth + 24 : 380;
+
+    container.scrollBy({
       left: direction === 'left' ? -scrollAmount : scrollAmount,
       behavior: 'smooth',
     });
+
+    manualScrollTimerRef.current = setTimeout(() => {
+      setIsManualScrolling(false);
+    }, 1500);
   };
 
   // Mouse Drag to scroll logic
