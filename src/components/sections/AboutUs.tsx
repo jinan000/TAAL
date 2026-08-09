@@ -30,6 +30,16 @@ const CommunitySVG = ({ className }: { className?: string }) => (
 
 const ExpandableBlock = ({ preview, full }: { preview: React.ReactNode; full: React.ReactNode }) => {
   const [expanded, setExpanded] = useState(false);
+
+  useEffect(() => {
+    // Recalculate GSAP ScrollTrigger and Lenis smooth scroll boundaries on expansion
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+      window.dispatchEvent(new Event('resize'));
+    }, 50);
+    return () => clearTimeout(timer);
+  }, [expanded]);
+
   return (
     <div className="flex flex-col items-center">
       <div className="text-soft-ivory/60 font-light leading-relaxed text-sm md:text-base space-y-4">
@@ -37,7 +47,7 @@ const ExpandableBlock = ({ preview, full }: { preview: React.ReactNode; full: Re
       </div>
       <button 
         onClick={() => setExpanded(!expanded)} 
-        className="mt-4 text-rose-gold hover:text-soft-ivory transition-colors text-xs font-medium uppercase tracking-widest border-b border-rose-gold/30 pb-1"
+        className="mt-4 text-rose-gold hover:text-soft-ivory transition-colors text-xs font-medium uppercase tracking-widest border-b border-rose-gold/30 pb-1 cursor-pointer"
       >
         {expanded ? 'Read Less' : 'Read More'}
       </button>
