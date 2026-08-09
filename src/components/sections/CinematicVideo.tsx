@@ -4,9 +4,12 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Volume2, VolumeX, Play, Pause } from 'lucide-react';
 import introVideo from '../../assets/intro.mp4';
 
+import { useFreeTrialModal } from '../../context/FreeTrialModalContext';
+
 gsap.registerPlugin(ScrollTrigger);
 
 export default function CinematicVideo() {
+  const { openModal } = useFreeTrialModal();
   const sectionRef = useRef<HTMLDivElement>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
   const textOverlayRef = useRef<HTMLDivElement>(null);
@@ -161,7 +164,7 @@ export default function CinematicVideo() {
                 </span>
               </button>
               <button 
-                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={() => openModal()}
                 className="group relative px-8 py-4 rounded-full overflow-hidden w-full sm:w-auto shadow-[0_0_30px_rgba(207,159,114,0.2)] cursor-pointer"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-[#d4af37] via-[#e5c158] to-[#cf9f72]" />

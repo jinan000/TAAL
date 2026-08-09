@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState, type FormEvent } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { MapPin, Phone, Mail, MessageCircle, Send } from 'lucide-react';
+import { MapPin, Phone, Mail, MessageCircle, Send, CheckCircle2, AlertCircle } from 'lucide-react';
 import SectionTitle from '../ui/SectionTitle';
 import GlassCard from '../ui/GlassCard';
 import MagneticButton from '../ui/MagneticButton';
@@ -15,10 +15,13 @@ export default function Contact() {
     name: '',
     email: '',
     phone: '',
-    interest: '',
+    subject: 'General Enquiry',
     message: '',
+    website: '', // Honeypot field
   });
-  const [submitted, setSubmitted] = useState(false);
+
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -48,97 +51,45 @@ export default function Contact() {
     return () => ctx.revert();
   }, []);
 
-  const [lastSubmittedData, setLastSubmittedData] = useState<{
-    name: string;
-    email: string;
-    phone: string;
-    interest: string;
-    message: string;
-    mailtoUrl: string;
-    gmailWebUrl: string;
-    whatsappUrl: string;
-  } | null>(null);
-
-  const buildMailtoLink = (data: typeof formState) => {
-    const subject = `Free Trial Booking - ${data.name}`;
-    const body = `Hello TAAL Dance Academy,
-
-I would like to book a free trial class! Here are my details:
-
-Full Name: ${data.name}
-Email Address: ${data.email}
-Phone Number: ${data.phone || 'Not provided'}
-Interested Program: ${data.interest || 'General Inquiry'}
-
-Message:
-${data.message || 'No additional details provided.'}
-
-Sent via TAAL Dance Academy Website`;
-
-    return `mailto:${CONTACT_INFO.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  };
-
-  const buildGmailWebLink = (data: typeof formState) => {
-    const subject = `Free Trial Booking - ${data.name}`;
-    const body = `Hello TAAL Dance Academy,
-
-I would like to book a free trial class! Here are my details:
-
-Full Name: ${data.name}
-Email Address: ${data.email}
-Phone Number: ${data.phone || 'Not provided'}
-Interested Program: ${data.interest || 'General Inquiry'}
-
-Message:
-${data.message || 'No additional details provided.'}
-
-Sent via TAAL Dance Academy Website`;
-
-    return `https://mail.google.com/mail/?view=cm&fs=1&to=${CONTACT_INFO.email}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  };
-
-  const buildWhatsappLink = (data: typeof formState) => {
-    const text = `Hi TAAL Dance Academy! I would like to book a Free Trial.
-Name: ${data.name}
-Email: ${data.email}
-Phone: ${data.phone || 'N/A'}
-Program: ${data.interest || 'General Inquiry'}
-Message: ${data.message || 'N/A'}`;
-    return `https://wa.me/15873773370?text=${encodeURIComponent(text)}`;
-  };
-
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const mailtoUrl = buildMailtoLink(formState);
-    const gmailWebUrl = buildGmailWebLink(formState);
-    const whatsappUrl = buildWhatsappLink(formState);
+    setStatus('submitting');
+    setErrorMessage('');
 
-    setLastSubmittedData({ ...formState, mailtoUrl, gmailWebUrl, whatsappUrl });
-    setSubmitted(true);
+    // Frontend validation
+    if (!formState.name.trim() || !formState.email.trim() || !formState.message.trim()) {
+      setStatus('error');
+      setErrorMessage('Please fill in all required fields.');
+      return;
+    }
 
-    // Fire background email notification asynchronously without blocking UI
-    fetch('https://formsubmit.co/ajax/infoattaaldanceacademy@gmail.com', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-      body: JSON.stringify({
-        name: formState.name,
-        email: formState.email,
-        phone: formState.phone || 'N/A',
-        interest: formState.interest || 'General Inquiry',
-        message: formState.message || 'N/A',
-        _subject: `Free Trial Booking - ${formState.name}`,
-        _template: 'table',
-      }),
-    }).catch(() => {});
+    if (formState.message.trim().length < 5) {
+      setStatus('error');
+      setErrorMessage('Message must be at least 5 characters long.');
+      return;
+    }
 
-    // Synchronously try opening default mail client
     try {
-      window.location.href = mailtoUrl;
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify(formState),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        setStatus('success');
+      } else {
+        setStatus('error');
+        setErrorMessage(data.error || 'Unable to send your request. Please try again or contact us directly.');
+      }
     } catch {
-      // Handled by on-screen action choices
+      setStatus('error');
+      setErrorMessage('Unable to send your request. Please check your network connection or try again directly.');
     }
   };
 
@@ -205,99 +156,63 @@ Message: ${data.message || 'N/A'}`;
             </div>
           </div>
 
-          {/* Right — Registration Form */}
+          {/* Right — Registration & Contact Form */}
           <div className="contact-right">
             <GlassCard className="p-8 md:p-10" hover={false}>
               <h3 className="font-display text-2xl text-soft-ivory mb-2">
-                Book Your Free Trial
+                Send Us A Message
               </h3>
               <p className="text-soft-ivory/40 text-sm mb-6">
-                Fill in the form below and we'll get back to you within 24 hours. You can also directly <a href="https://forms.gle/3WJBQKB3EsRbsPmNA" target="_blank" rel="noreferrer" className="text-rose-gold hover:underline">register here</a>.
+                Have questions about our programs, schedules, or events? Send us a message below and we'll reply within 24 hours.
               </p>
 
-              {submitted ? (
-                <div className="py-6 text-left space-y-5">
-                  <div className="flex items-center gap-3 bg-rose-gold/10 border border-rose-gold/30 rounded-xl p-4">
-                    <div className="w-10 h-10 rounded-full bg-rose-gold/20 flex items-center justify-center flex-shrink-0">
-                      <Send size={20} className="text-rose-gold" />
-                    </div>
-                    <div>
-                      <h4 className="font-display text-lg text-soft-ivory">Trial Booking Details Recorded!</h4>
-                      <p className="text-xs text-soft-ivory/60">
-                        Receiver: <span className="text-rose-gold font-mono font-medium">{CONTACT_INFO.email}</span>
-                      </p>
-                    </div>
+              {status === 'success' ? (
+                <div className="text-center py-10 space-y-4">
+                  <div className="w-16 h-16 rounded-full bg-rose-gold/10 border border-rose-gold/30 flex items-center justify-center mx-auto text-rose-gold">
+                    <CheckCircle2 size={36} />
                   </div>
-
-                  {lastSubmittedData && (
-                    <div className="bg-white/[0.03] border border-white/[0.08] rounded-xl p-4 text-xs font-mono space-y-2 text-soft-ivory/80">
-                      <p className="text-rose-gold/80 font-sans text-xs font-semibold uppercase tracking-wider mb-2">Form Template Preview</p>
-                      <p><span className="text-soft-ivory/40">To:</span> {CONTACT_INFO.email}</p>
-                      <p><span className="text-soft-ivory/40">Subject:</span> Free Trial Booking - {lastSubmittedData.name}</p>
-                      <div className="border-t border-white/10 pt-2 mt-2 space-y-1 text-soft-ivory/70 font-sans">
-                        <p><span className="text-soft-ivory/40">Name:</span> {lastSubmittedData.name}</p>
-                        <p><span className="text-soft-ivory/40">Email:</span> {lastSubmittedData.email}</p>
-                        <p><span className="text-soft-ivory/40">Phone:</span> {lastSubmittedData.phone || 'N/A'}</p>
-                        <p><span className="text-soft-ivory/40">Program:</span> {lastSubmittedData.interest || 'General'}</p>
-                        <p><span className="text-soft-ivory/40">Message:</span> {lastSubmittedData.message || 'N/A'}</p>
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="flex flex-col gap-3 pt-2">
-                    <p className="text-xs text-soft-ivory/60 font-medium">Click to send or open your preferred platform:</p>
-                    {lastSubmittedData && (
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <a
-                          href={lastSubmittedData.gmailWebUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="px-4 py-3 rounded-xl bg-gradient-to-r from-[#d4af37] via-[#e5c158] to-[#cf9f72] text-black font-semibold text-xs tracking-wider uppercase text-center hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
-                        >
-                          <Mail size={14} /> Open in Gmail (Web)
-                        </a>
-                        <a
-                          href={lastSubmittedData.whatsappUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="px-4 py-3 rounded-xl bg-emerald-600/30 border border-emerald-500/50 text-emerald-300 font-semibold text-xs tracking-wider uppercase text-center hover:bg-emerald-600/40 transition-colors flex items-center justify-center gap-2"
-                        >
-                          <MessageCircle size={14} /> Send via WhatsApp
-                        </a>
-                        <a
-                          href={lastSubmittedData.mailtoUrl}
-                          className="px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-soft-ivory font-semibold text-xs tracking-wider uppercase text-center hover:bg-white/10 transition-colors flex items-center justify-center gap-2"
-                        >
-                          <Mail size={14} /> Mail App (Desktop/Phone)
-                        </a>
-                        <a
-                          href="https://forms.gle/3WJBQKB3EsRbsPmNA"
-                          target="_blank"
-                          rel="noreferrer"
-                          className="px-4 py-3 rounded-xl bg-rose-gold/10 border border-rose-gold/30 text-rose-gold font-semibold text-xs tracking-wider uppercase text-center hover:bg-rose-gold/20 transition-colors flex items-center justify-center gap-2"
-                        >
-                          Google Form Link
-                        </a>
-                      </div>
-                    )}
+                  <h4 className="font-display text-2xl text-soft-ivory">Thank You</h4>
+                  <p className="text-soft-ivory/70 text-sm max-w-sm mx-auto leading-relaxed">
+                    Your request has been received. The TAAL team will get back to you shortly.
+                  </p>
+                  <div className="pt-4">
                     <button
                       type="button"
                       onClick={() => {
-                        setSubmitted(false);
-                        setFormState({ name: '', email: '', phone: '', interest: '', message: '' });
+                        setStatus('idle');
+                        setFormState({ name: '', email: '', phone: '', subject: 'General Enquiry', message: '', website: '' });
                       }}
-                      className="w-full mt-2 px-5 py-3 rounded-xl bg-white/5 border border-white/10 text-soft-ivory text-xs tracking-wider uppercase hover:bg-white/10 transition-colors"
+                      className="px-6 py-2.5 rounded-full bg-white/5 border border-white/10 text-soft-ivory text-xs tracking-wider uppercase hover:bg-white/10 transition-colors cursor-pointer"
                     >
-                      Book Another Trial
+                      Send Another Message
                     </button>
                   </div>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
+                  {/* Honeypot Spam Protection Field */}
+                  <input
+                    type="text"
+                    name="website"
+                    value={formState.website}
+                    onChange={(e) => setFormState({ ...formState, website: e.target.value })}
+                    style={{ display: 'none' }}
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+
+                  {/* Error Alert */}
+                  {status === 'error' && (
+                    <div className="flex items-center gap-3 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-300 text-xs">
+                      <AlertCircle size={18} className="flex-shrink-0" />
+                      <span>{errorMessage || 'Unable to send your request. Please try again or contact us directly.'}</span>
+                    </div>
+                  )}
+
                   {/* Name */}
                   <div>
-                    <label className="block text-xs tracking-widest uppercase text-soft-ivory/30 mb-2">
-                      Full Name
+                    <label className="block text-xs tracking-widest uppercase text-soft-ivory/40 mb-2 font-medium">
+                      Full Name *
                     </label>
                     <input
                       type="text"
@@ -305,15 +220,15 @@ Message: ${data.message || 'N/A'}`;
                       value={formState.name}
                       onChange={(e) => setFormState({ ...formState, name: e.target.value })}
                       className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-5 py-3.5 text-soft-ivory text-sm focus:outline-none focus:border-rose-gold/30 transition-colors placeholder:text-soft-ivory/20"
-                      placeholder="Enter your name"
+                      placeholder="Enter your full name"
                     />
                   </div>
 
                   {/* Email + Phone */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
-                      <label className="block text-xs tracking-widest uppercase text-soft-ivory/30 mb-2">
-                        Email
+                      <label className="block text-xs tracking-widest uppercase text-soft-ivory/40 mb-2 font-medium">
+                        Email Address *
                       </label>
                       <input
                         type="email"
@@ -325,57 +240,57 @@ Message: ${data.message || 'N/A'}`;
                       />
                     </div>
                     <div>
-                      <label className="block text-xs tracking-widest uppercase text-soft-ivory/30 mb-2">
-                        Phone
+                      <label className="block text-xs tracking-widest uppercase text-soft-ivory/40 mb-2 font-medium">
+                        Phone Number
                       </label>
                       <input
                         type="tel"
                         value={formState.phone}
                         onChange={(e) => setFormState({ ...formState, phone: e.target.value })}
                         className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-5 py-3.5 text-soft-ivory text-sm focus:outline-none focus:border-rose-gold/30 transition-colors placeholder:text-soft-ivory/20"
-                        placeholder="+1 (555) 000-0000"
+                        placeholder="+1 (587) 000-0000"
                       />
                     </div>
                   </div>
 
-                  {/* Interest */}
+                  {/* Subject */}
                   <div>
-                    <label className="block text-xs tracking-widest uppercase text-soft-ivory/30 mb-2">
-                      Interested In
+                    <label className="block text-xs tracking-widest uppercase text-soft-ivory/40 mb-2 font-medium">
+                      Subject
                     </label>
-                    <select
-                      value={formState.interest}
-                      onChange={(e) => setFormState({ ...formState, interest: e.target.value })}
-                      className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-5 py-3.5 text-soft-ivory text-sm focus:outline-none focus:border-rose-gold/30 transition-colors appearance-none"
-                    >
-                      <option value="" className="bg-charcoal">Select a program</option>
-                      <option value="bollywood" className="bg-charcoal">Bollywood</option>
-                      <option value="bharatanatyam" className="bg-charcoal">Bharatanatyam</option>
-                      <option value="semi-classical" className="bg-charcoal">Semi Classical</option>
-                      <option value="fitness" className="bg-charcoal">Dance Fitness</option>
-                      <option value="private" className="bg-charcoal">Private Lessons</option>
-                      <option value="wedding" className="bg-charcoal">Wedding Choreography</option>
-                      <option value="corporate" className="bg-charcoal">Corporate Events</option>
-                      <option value="online" className="bg-charcoal">Online Classes</option>
-                    </select>
+                    <input
+                      type="text"
+                      value={formState.subject}
+                      onChange={(e) => setFormState({ ...formState, subject: e.target.value })}
+                      className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-5 py-3.5 text-soft-ivory text-sm focus:outline-none focus:border-rose-gold/30 transition-colors placeholder:text-soft-ivory/20"
+                      placeholder="e.g. Class Inquiry / Wedding Performance"
+                    />
                   </div>
 
                   {/* Message */}
                   <div>
-                    <label className="block text-xs tracking-widest uppercase text-soft-ivory/30 mb-2">
-                      Message
+                    <label className="block text-xs tracking-widest uppercase text-soft-ivory/40 mb-2 font-medium">
+                      Message *
                     </label>
                     <textarea
                       rows={4}
+                      required
                       value={formState.message}
                       onChange={(e) => setFormState({ ...formState, message: e.target.value })}
                       className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-5 py-3.5 text-soft-ivory text-sm focus:outline-none focus:border-rose-gold/30 transition-colors resize-none placeholder:text-soft-ivory/20"
-                      placeholder="Tell us about your dance goals..."
+                      placeholder="Tell us about your dance goals or questions..."
                     />
                   </div>
 
+                  {/* Submit Button */}
                   <MagneticButton type="submit" variant="primary" className="w-full justify-center">
-                    {isSubmitting ? 'Sending Request...' : 'Book My Free Trial'}
+                    {status === 'submitting' ? (
+                      <span className="flex items-center gap-2">
+                        <Send className="animate-spin w-4 h-4" /> SENDING...
+                      </span>
+                    ) : (
+                      'SEND MESSAGE'
+                    )}
                   </MagneticButton>
                 </form>
               )}

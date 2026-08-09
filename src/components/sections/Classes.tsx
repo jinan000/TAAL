@@ -7,9 +7,12 @@ import SectionTitle from '../ui/SectionTitle';
 import Marquee from '../ui/Marquee';
 import { CLASSES } from '../../utils/constants';
 
+import { useFreeTrialModal } from '../../context/FreeTrialModalContext';
+
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Classes() {
+  const { openModal } = useFreeTrialModal();
   const sectionRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -124,7 +127,10 @@ export default function Classes() {
             whileHover={{ y: -8 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="relative h-[480px] rounded-2xl overflow-hidden border border-white/[0.08] bg-[#0d0909]/80 backdrop-blur-md group cursor-pointer">
+            <div 
+              onClick={() => openModal({ danceStyle: cls.title.includes('Bollywood') ? 'Bollywood' : cls.title.includes('Bharatanatyam') ? 'Bharatanatyam' : cls.title.includes('Semi-Classical') ? 'Semi-Classical' : cls.title.includes('Fitness') ? 'Dance Fitness' : 'Other', preferredClass: cls.title })}
+              className="relative h-[480px] rounded-2xl overflow-hidden border border-white/[0.08] bg-[#0d0909]/80 backdrop-blur-md group cursor-pointer"
+            >
               {/* Background Image */}
               {(cls as any).image && (
                 <img
@@ -179,8 +185,8 @@ export default function Classes() {
                 </div>
 
                 {/* Bottom */}
-                <div className="flex items-center gap-2 text-xs tracking-widest uppercase group-hover:text-rose-gold transition-colors duration-300 text-soft-ivory/30">
-                  <span>Learn More</span>
+                <div className="flex items-center gap-2 text-xs tracking-widest uppercase group-hover:text-rose-gold transition-colors duration-300 text-soft-ivory/50 font-medium">
+                  <span>Book A Free Trial</span>
                   <ChevronRight size={14} />
                 </div>
               </div>

@@ -4,6 +4,8 @@ import { Search, Plus, Minus, ArrowLeft, MessageCircle, Phone, Mail } from 'luci
 import { Link } from 'react-router-dom';
 import { FAQ_DATA, CONTACT_INFO } from '../utils/constants';
 
+import { useFreeTrialModal } from '../context/FreeTrialModalContext';
+
 function FAQCard({
   question,
   answer,
@@ -52,6 +54,7 @@ function FAQCard({
 }
 
 export default function FaqPage() {
+  const { openModal } = useFreeTrialModal();
   const [searchTerm, setSearchTerm] = useState('');
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
@@ -170,17 +173,13 @@ export default function FaqPage() {
               <Mail className="w-4 h-4 text-rose-gold" />
               <span>{CONTACT_INFO.email}</span>
             </a>
-            <a
-              href="/#contact"
-              onClick={(e) => {
-                e.preventDefault();
-                window.location.href = '/#contact';
-              }}
+            <button
+              onClick={() => openModal()}
               className="flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-[#d4af37] via-[#e5c158] to-[#cf9f72] text-black font-semibold text-sm hover:opacity-90 transition-opacity cursor-pointer"
             >
               <MessageCircle className="w-4 h-4" />
               <span>Book A Free Trial</span>
-            </a>
+            </button>
           </div>
         </div>
 

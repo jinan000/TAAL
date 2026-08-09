@@ -6,6 +6,8 @@ import { NAV_LINKS } from '../../utils/constants';
 import MagneticButton from '../ui/MagneticButton';
 import logoImage from '../../assets/Taal-Logopng.png';
 
+import { useFreeTrialModal } from '../../context/FreeTrialModalContext';
+
 const toTitleCase = (str: string) => {
   if (str.toUpperCase().includes('TAAL') || str === 'FAQ') return str;
   return str.replace(
@@ -15,6 +17,7 @@ const toTitleCase = (str: string) => {
 };
 
 export default function Header() {
+  const { openModal } = useFreeTrialModal();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -168,7 +171,7 @@ export default function Header() {
             <div className="hidden md:block">
               <MagneticButton
                 variant="primary"
-                onClick={() => handleNavClick('#contact')}
+                onClick={() => openModal()}
                 className="!py-[14px] !px-8 !text-[13px] !tracking-widest !uppercase"
               >
                 Book A Free Trial
@@ -219,7 +222,7 @@ export default function Header() {
               >
                 <MagneticButton
                   variant="primary"
-                  onClick={() => handleNavClick('#contact')}
+                  onClick={() => { setIsMobileOpen(false); openModal(); }}
                   className="!py-4 !px-8 !tracking-widest !uppercase"
                 >
                   Book A Free Trial

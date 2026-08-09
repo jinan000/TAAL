@@ -4,7 +4,10 @@ import MagneticButton from '../ui/MagneticButton';
 import ScrollingWords from '../ui/ScrollingWords';
 import heroImage from '../../assets/hero.jpeg';
 
+import { useFreeTrialModal } from '../../context/FreeTrialModalContext';
+
 export default function Hero() {
+  const { openModal } = useFreeTrialModal();
   const sectionRef = useRef<HTMLDivElement>(null);
 
   // GSAP hero entrance
@@ -87,11 +90,7 @@ export default function Hero() {
         <div className="hero-buttons flex flex-col sm:flex-row items-center justify-center gap-4">
           <MagneticButton 
             variant="primary" 
-            href="#contact"
-            onClick={(e) => {
-              e?.preventDefault();
-              document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-            }}
+            onClick={() => openModal()}
           >
             Book A Free Trial
           </MagneticButton>

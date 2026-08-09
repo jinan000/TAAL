@@ -17,6 +17,9 @@ import FaqPage from './pages/FaqPage';
 import TaalCaresPage from './pages/TaalCaresPage';
 import ClassesPage from './pages/ClassesPage';
 
+import { FreeTrialModalProvider } from './context/FreeTrialModalContext';
+import FreeTrialModal from './components/ui/FreeTrialModal';
+
 gsap.registerPlugin(ScrollTrigger);
 
 export default function App() {
@@ -45,28 +48,33 @@ export default function App() {
   }, []);
 
   return (
-    <BrowserRouter>
-      <div className="relative">
-        {/* Scroll Progress Bar */}
-        <ScrollProgress />
+    <FreeTrialModalProvider>
+      <BrowserRouter>
+        <div className="relative">
+          {/* Scroll Progress Bar */}
+          <ScrollProgress />
 
-        {/* Header */}
-        <Header />
+          {/* Header */}
+          <Header />
 
-        {/* Main Routes */}
-        <main>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/classes" element={<ClassesPage />} />
-            <Route path="/faq" element={<FaqPage />} />
-            <Route path="/taal-cares" element={<TaalCaresPage />} />
-          </Routes>
-        </main>
+          {/* Main Routes */}
+          <main>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/classes" element={<ClassesPage />} />
+              <Route path="/faq" element={<FaqPage />} />
+              <Route path="/taal-cares" element={<TaalCaresPage />} />
+            </Routes>
+          </main>
 
-        {/* Footer */}
-        <Footer />
-      </div>
-    </BrowserRouter>
+          {/* Footer */}
+          <Footer />
+
+          {/* Global Free Trial Modal */}
+          <FreeTrialModal />
+        </div>
+      </BrowserRouter>
+    </FreeTrialModalProvider>
   );
 }
 
