@@ -48,6 +48,7 @@ export default function Contact() {
     return () => ctx.revert();
   }, []);
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [lastSubmittedData, setLastSubmittedData] = useState<{
     name: string;
     email: string;
@@ -55,6 +56,7 @@ export default function Contact() {
     interest: string;
     message: string;
     mailtoUrl: string;
+    whatsappUrl: string;
   } | null>(null);
 
   const buildMailtoLink = (data: typeof formState) => {
@@ -76,14 +78,56 @@ Sent via TAAL Dance Academy Website`;
     return `mailto:${CONTACT_INFO.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const buildWhatsappLink = (data: typeof formState) => {
+    const text = `Hi TAAL Dance Academy! I would like to book a Free Trial.
+Name: ${data.name}
+Email: ${data.email}
+Phone: ${data.phone || 'N/A'}
+Program: ${data.interest || 'General Inquiry'}
+Message: ${data.message || 'N/A'}`;
+    return `https://wa.me/15873773370?text=${encodeURIComponent(text)}`;
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
     const mailtoUrl = buildMailtoLink(formState);
-    setLastSubmittedData({ ...formState, mailtoUrl });
-    setSubmitted(true);
-    
-    // Automatically trigger mail client
-    window.location.href = mailtoUrl;
+    const whatsappUrl = buildWhatsappLink(formState);
+
+    const submissionData = { ...formState, mailtoUrl, whatsappUrl };
+    setLastSubmittedData(submissionData);
+
+    // Send in background via FormSubmit API to receiver email infoattaaldanceacademy@gmail.com
+    try {
+      await fetch('https://formsubmit.co/ajax/infoattaaldanceacademy@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formState.name,
+          email: formState.email,
+          phone: formState.phone || 'N/A',
+          interest: formState.interest || 'General Inquiry',
+          message: formState.message || 'N/A',
+          _subject: `Free Trial Booking - ${formState.name}`,
+          _template: 'table',
+        }),
+      });
+    } catch {
+      // Ignore network fallback errors, mailto & whatsapp handle offline
+    } finally {
+      setIsSubmitting(false);
+      setSubmitted(true);
+      
+      // Open mail client cleanly
+      try {
+        window.location.href = mailtoUrl;
+      } catch {
+        // Fallback handled by UI buttons
+      }
+    }
   };
 
   const contactItems = [
@@ -166,7 +210,7 @@ Sent via TAAL Dance Academy Website`;
                       <Send size={20} className="text-rose-gold" />
                     </div>
                     <div>
-                      <h4 className="font-display text-lg text-soft-ivory">Email Ready to Send!</h4>
+                      <h4 className="font-display text-lg text-soft-ivory">Trial Booking Received!</h4>
                       <p className="text-xs text-soft-ivory/60">
                         Recipient: <span className="text-rose-gold font-mono font-medium">{CONTACT_INFO.email}</span>
                       </p>
@@ -175,7 +219,7 @@ Sent via TAAL Dance Academy Website`;
 
                   {lastSubmittedData && (
                     <div className="bg-white/[0.03] border border-white/[0.08] rounded-xl p-4 text-xs font-mono space-y-2 text-soft-ivory/80">
-                      <p className="text-rose-gold/80 font-sans text-xs font-semibold uppercase tracking-wider mb-2">Form Template Preview</p>
+                      <p className="text-rose-gold/80 font-sans text-xs font-semibold uppercase tracking-wider mb-2">Form Template Sent</p>
                       <p><span className="text-soft-ivory/40">To:</span> {CONTACT_INFO.email}</p>
                       <p><span className="text-soft-ivory/40">Subject:</span> Free Trial Booking - {lastSubmittedData.name}</p>
                       <div className="border-t border-white/10 pt-2 mt-2 space-y-1 text-soft-ivory/70">
@@ -188,14 +232,24 @@ Sent via TAAL Dance Academy Website`;
                     </div>
                   )}
 
-                  <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                  <div className="flex flex-col gap-3 pt-2">
                     {lastSubmittedData && (
-                      <a
-                        href={lastSubmittedData.mailtoUrl}
-                        className="flex-1 px-5 py-3 rounded-xl bg-gradient-to-r from-[#d4af37] via-[#e5c158] to-[#cf9f72] text-black font-semibold text-xs tracking-wider uppercase text-center hover:opacity-90 transition-opacity"
-                      >
-                        Open Email App Again
-                      </a>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <a
+                          href={lastSubmittedData.mailtoUrl}
+                          className="px-4 py-3 rounded-xl bg-gradient-to-r from-[#d4af37] via-[#e5c158] to-[#cf9f72] text-black font-semibold text-xs tracking-wider uppercase text-center hover:opacity-90 transition-opacity"
+                        >
+                          Send via Email App
+                        </a>
+                        <a
+                          href={lastSubmittedData.whatsappUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="px-4 py-3 rounded-xl bg-emerald-600/30 border border-emerald-500/50 text-emerald-300 font-semibold text-xs tracking-wider uppercase text-center hover:bg-emerald-600/40 transition-colors"
+                        >
+                          Send via WhatsApp
+                        </a>
+                      </div>
                     )}
                     <button
                       type="button"
@@ -203,7 +257,7 @@ Sent via TAAL Dance Academy Website`;
                         setSubmitted(false);
                         setFormState({ name: '', email: '', phone: '', interest: '', message: '' });
                       }}
-                      className="px-5 py-3 rounded-xl bg-white/5 border border-white/10 text-soft-ivory text-xs tracking-wider uppercase hover:bg-white/10 transition-colors"
+                      className="w-full px-5 py-3 rounded-xl bg-white/5 border border-white/10 text-soft-ivory text-xs tracking-wider uppercase hover:bg-white/10 transition-colors"
                     >
                       Book Another Trial
                     </button>
@@ -291,8 +345,8 @@ Sent via TAAL Dance Academy Website`;
                     />
                   </div>
 
-                  <MagneticButton variant="primary" className="w-full justify-center">
-                    Book My Free Trial
+                  <MagneticButton type="submit" variant="primary" className="w-full justify-center">
+                    {isSubmitting ? 'Sending Request...' : 'Book My Free Trial'}
                   </MagneticButton>
                 </form>
               )}

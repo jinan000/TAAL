@@ -74,6 +74,7 @@ export default function Header() {
 
   const handleNavClick = (href: string) => {
     setIsMobileOpen(false);
+    document.body.style.overflow = '';
 
     if (href.startsWith('/')) {
       navigate(href);
@@ -84,10 +85,16 @@ export default function Header() {
         setTimeout(() => {
           const target = document.querySelector(href);
           target?.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
+        }, 150);
       } else {
-        const target = document.querySelector(href);
-        target?.scrollIntoView({ behavior: 'smooth' });
+        setTimeout(() => {
+          const target = document.querySelector(href);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+          } else {
+            window.location.hash = href;
+          }
+        }, 100);
       }
     }
   };

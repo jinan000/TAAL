@@ -5,8 +5,9 @@ interface MagneticButtonProps {
   children: ReactNode;
   className?: string;
   variant?: 'primary' | 'secondary' | 'ghost';
-  onClick?: () => void;
+  onClick?: (e?: React.MouseEvent) => void;
   href?: string;
+  type?: 'button' | 'submit' | 'reset';
 }
 
 export default function MagneticButton({
@@ -15,6 +16,7 @@ export default function MagneticButton({
   variant = 'primary',
   onClick,
   href,
+  type = 'button',
 }: MagneticButtonProps) {
   const btnRef = useRef<HTMLButtonElement | HTMLAnchorElement>(null);
 
@@ -49,19 +51,19 @@ export default function MagneticButton({
   }, []);
 
   const baseStyles =
-    'relative inline-flex items-center justify-center gap-2 font-body font-medium tracking-wide text-xs uppercase transition-all duration-300 will-change-transform';
+    'relative inline-flex items-center justify-center gap-2 font-body font-medium tracking-wide text-xs uppercase transition-all duration-300 will-change-transform cursor-pointer select-none';
 
   const variants = {
     primary:
-      'px-6 py-3 bg-gradient-to-r from-rose-gold via-champagne to-copper text-luxury-black rounded-full hover:shadow-[0_0_40px_rgba(216,167,160,0.3)] hover:scale-[1.02]',
+      'px-6 py-3 bg-gradient-to-r from-rose-gold via-champagne to-copper text-luxury-black rounded-full hover:shadow-[0_0_40px_rgba(216,167,160,0.3)] active:scale-[0.98]',
     secondary:
-      'px-6 py-3 border border-rose-gold/30 text-rose-gold rounded-full hover:bg-rose-gold/10 hover:border-rose-gold/50 hover:shadow-[0_0_30px_rgba(216,167,160,0.15)]',
+      'px-6 py-3 border border-rose-gold/30 text-rose-gold rounded-full hover:bg-rose-gold/10 hover:border-rose-gold/50 hover:shadow-[0_0_30px_rgba(216,167,160,0.15)] active:scale-[0.98]',
     ghost:
       'px-6 py-3 text-soft-ivory/70 hover:text-rose-gold',
   };
 
   const Tag = href ? 'a' : 'button';
-  const props = href ? { href } : { onClick };
+  const props = href ? { href } : { onClick, type };
 
   return (
     <Tag
