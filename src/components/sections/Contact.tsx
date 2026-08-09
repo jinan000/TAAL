@@ -48,7 +48,6 @@ export default function Contact() {
     return () => ctx.revert();
   }, []);
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [lastSubmittedData, setLastSubmittedData] = useState<{
     name: string;
     email: string;
@@ -56,6 +55,7 @@ export default function Contact() {
     interest: string;
     message: string;
     mailtoUrl: string;
+    gmailWebUrl: string;
     whatsappUrl: string;
   } | null>(null);
 
@@ -78,6 +78,25 @@ Sent via TAAL Dance Academy Website`;
     return `mailto:${CONTACT_INFO.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
 
+  const buildGmailWebLink = (data: typeof formState) => {
+    const subject = `Free Trial Booking - ${data.name}`;
+    const body = `Hello TAAL Dance Academy,
+
+I would like to book a free trial class! Here are my details:
+
+Full Name: ${data.name}
+Email Address: ${data.email}
+Phone Number: ${data.phone || 'Not provided'}
+Interested Program: ${data.interest || 'General Inquiry'}
+
+Message:
+${data.message || 'No additional details provided.'}
+
+Sent via TAAL Dance Academy Website`;
+
+    return `https://mail.google.com/mail/?view=cm&fs=1&to=${CONTACT_INFO.email}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
+
   const buildWhatsappLink = (data: typeof formState) => {
     const text = `Hi TAAL Dance Academy! I would like to book a Free Trial.
 Name: ${data.name}
@@ -88,45 +107,38 @@ Message: ${data.message || 'N/A'}`;
     return `https://wa.me/15873773370?text=${encodeURIComponent(text)}`;
   };
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
     const mailtoUrl = buildMailtoLink(formState);
+    const gmailWebUrl = buildGmailWebLink(formState);
     const whatsappUrl = buildWhatsappLink(formState);
 
-    const submissionData = { ...formState, mailtoUrl, whatsappUrl };
-    setLastSubmittedData(submissionData);
+    setLastSubmittedData({ ...formState, mailtoUrl, gmailWebUrl, whatsappUrl });
+    setSubmitted(true);
 
-    // Send in background via FormSubmit API to receiver email infoattaaldanceacademy@gmail.com
+    // Fire background email notification asynchronously without blocking UI
+    fetch('https://formsubmit.co/ajax/infoattaaldanceacademy@gmail.com', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({
+        name: formState.name,
+        email: formState.email,
+        phone: formState.phone || 'N/A',
+        interest: formState.interest || 'General Inquiry',
+        message: formState.message || 'N/A',
+        _subject: `Free Trial Booking - ${formState.name}`,
+        _template: 'table',
+      }),
+    }).catch(() => {});
+
+    // Synchronously try opening default mail client
     try {
-      await fetch('https://formsubmit.co/ajax/infoattaaldanceacademy@gmail.com', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: JSON.stringify({
-          name: formState.name,
-          email: formState.email,
-          phone: formState.phone || 'N/A',
-          interest: formState.interest || 'General Inquiry',
-          message: formState.message || 'N/A',
-          _subject: `Free Trial Booking - ${formState.name}`,
-          _template: 'table',
-        }),
-      });
+      window.location.href = mailtoUrl;
     } catch {
-      // Ignore network fallback errors, mailto & whatsapp handle offline
-    } finally {
-      setIsSubmitting(false);
-      setSubmitted(true);
-      
-      // Open mail client cleanly
-      try {
-        window.location.href = mailtoUrl;
-      } catch {
-        // Fallback handled by UI buttons
-      }
+      // Handled by on-screen action choices
     }
   };
 
@@ -210,19 +222,19 @@ Message: ${data.message || 'N/A'}`;
                       <Send size={20} className="text-rose-gold" />
                     </div>
                     <div>
-                      <h4 className="font-display text-lg text-soft-ivory">Trial Booking Received!</h4>
+                      <h4 className="font-display text-lg text-soft-ivory">Trial Booking Details Recorded!</h4>
                       <p className="text-xs text-soft-ivory/60">
-                        Recipient: <span className="text-rose-gold font-mono font-medium">{CONTACT_INFO.email}</span>
+                        Receiver: <span className="text-rose-gold font-mono font-medium">{CONTACT_INFO.email}</span>
                       </p>
                     </div>
                   </div>
 
                   {lastSubmittedData && (
                     <div className="bg-white/[0.03] border border-white/[0.08] rounded-xl p-4 text-xs font-mono space-y-2 text-soft-ivory/80">
-                      <p className="text-rose-gold/80 font-sans text-xs font-semibold uppercase tracking-wider mb-2">Form Template Sent</p>
+                      <p className="text-rose-gold/80 font-sans text-xs font-semibold uppercase tracking-wider mb-2">Form Template Preview</p>
                       <p><span className="text-soft-ivory/40">To:</span> {CONTACT_INFO.email}</p>
                       <p><span className="text-soft-ivory/40">Subject:</span> Free Trial Booking - {lastSubmittedData.name}</p>
-                      <div className="border-t border-white/10 pt-2 mt-2 space-y-1 text-soft-ivory/70">
+                      <div className="border-t border-white/10 pt-2 mt-2 space-y-1 text-soft-ivory/70 font-sans">
                         <p><span className="text-soft-ivory/40">Name:</span> {lastSubmittedData.name}</p>
                         <p><span className="text-soft-ivory/40">Email:</span> {lastSubmittedData.email}</p>
                         <p><span className="text-soft-ivory/40">Phone:</span> {lastSubmittedData.phone || 'N/A'}</p>
@@ -233,21 +245,38 @@ Message: ${data.message || 'N/A'}`;
                   )}
 
                   <div className="flex flex-col gap-3 pt-2">
+                    <p className="text-xs text-soft-ivory/60 font-medium">Click to send or open your preferred platform:</p>
                     {lastSubmittedData && (
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <a
-                          href={lastSubmittedData.mailtoUrl}
-                          className="px-4 py-3 rounded-xl bg-gradient-to-r from-[#d4af37] via-[#e5c158] to-[#cf9f72] text-black font-semibold text-xs tracking-wider uppercase text-center hover:opacity-90 transition-opacity"
+                          href={lastSubmittedData.gmailWebUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="px-4 py-3 rounded-xl bg-gradient-to-r from-[#d4af37] via-[#e5c158] to-[#cf9f72] text-black font-semibold text-xs tracking-wider uppercase text-center hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
                         >
-                          Send via Email App
+                          <Mail size={14} /> Open in Gmail (Web)
                         </a>
                         <a
                           href={lastSubmittedData.whatsappUrl}
                           target="_blank"
                           rel="noreferrer"
-                          className="px-4 py-3 rounded-xl bg-emerald-600/30 border border-emerald-500/50 text-emerald-300 font-semibold text-xs tracking-wider uppercase text-center hover:bg-emerald-600/40 transition-colors"
+                          className="px-4 py-3 rounded-xl bg-emerald-600/30 border border-emerald-500/50 text-emerald-300 font-semibold text-xs tracking-wider uppercase text-center hover:bg-emerald-600/40 transition-colors flex items-center justify-center gap-2"
                         >
-                          Send via WhatsApp
+                          <MessageCircle size={14} /> Send via WhatsApp
+                        </a>
+                        <a
+                          href={lastSubmittedData.mailtoUrl}
+                          className="px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-soft-ivory font-semibold text-xs tracking-wider uppercase text-center hover:bg-white/10 transition-colors flex items-center justify-center gap-2"
+                        >
+                          <Mail size={14} /> Mail App (Desktop/Phone)
+                        </a>
+                        <a
+                          href="https://forms.gle/3WJBQKB3EsRbsPmNA"
+                          target="_blank"
+                          rel="noreferrer"
+                          className="px-4 py-3 rounded-xl bg-rose-gold/10 border border-rose-gold/30 text-rose-gold font-semibold text-xs tracking-wider uppercase text-center hover:bg-rose-gold/20 transition-colors flex items-center justify-center gap-2"
+                        >
+                          Google Form Link
                         </a>
                       </div>
                     )}
@@ -257,7 +286,7 @@ Message: ${data.message || 'N/A'}`;
                         setSubmitted(false);
                         setFormState({ name: '', email: '', phone: '', interest: '', message: '' });
                       }}
-                      className="w-full px-5 py-3 rounded-xl bg-white/5 border border-white/10 text-soft-ivory text-xs tracking-wider uppercase hover:bg-white/10 transition-colors"
+                      className="w-full mt-2 px-5 py-3 rounded-xl bg-white/5 border border-white/10 text-soft-ivory text-xs tracking-wider uppercase hover:bg-white/10 transition-colors"
                     >
                       Book Another Trial
                     </button>

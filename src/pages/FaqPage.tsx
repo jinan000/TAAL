@@ -170,13 +170,17 @@ export default function FaqPage() {
               <Mail className="w-4 h-4 text-rose-gold" />
               <span>{CONTACT_INFO.email}</span>
             </a>
-            <Link
-              to="/#contact"
-              className="flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-[#d4af37] via-[#e5c158] to-[#cf9f72] text-black font-semibold text-sm hover:opacity-90 transition-opacity"
+            <a
+              href="/#contact"
+              onClick={(e) => {
+                e.preventDefault();
+                window.location.href = '/#contact';
+              }}
+              className="flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-[#d4af37] via-[#e5c158] to-[#cf9f72] text-black font-semibold text-sm hover:opacity-90 transition-opacity cursor-pointer"
             >
               <MessageCircle className="w-4 h-4" />
               <span>Book A Free Trial</span>
-            </Link>
+            </a>
           </div>
         </div>
 

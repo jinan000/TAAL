@@ -85,7 +85,14 @@ export default function Hero() {
 
         {/* Buttons */}
         <div className="hero-buttons flex flex-col sm:flex-row items-center justify-center gap-4">
-          <MagneticButton variant="primary" href="#contact">
+          <MagneticButton 
+            variant="primary" 
+            href="#contact"
+            onClick={(e) => {
+              e?.preventDefault();
+              document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+            }}
+          >
             Book A Free Trial
           </MagneticButton>
           <MagneticButton variant="secondary" href="#classes">
