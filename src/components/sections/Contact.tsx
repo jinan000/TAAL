@@ -48,10 +48,42 @@ export default function Contact() {
     return () => ctx.revert();
   }, []);
 
+  const [lastSubmittedData, setLastSubmittedData] = useState<{
+    name: string;
+    email: string;
+    phone: string;
+    interest: string;
+    message: string;
+    mailtoUrl: string;
+  } | null>(null);
+
+  const buildMailtoLink = (data: typeof formState) => {
+    const subject = `Free Trial Booking - ${data.name}`;
+    const body = `Hello TAAL Dance Academy,
+
+I would like to book a free trial class! Here are my details:
+
+Full Name: ${data.name}
+Email Address: ${data.email}
+Phone Number: ${data.phone || 'Not provided'}
+Interested Program: ${data.interest || 'General Inquiry'}
+
+Message:
+${data.message || 'No additional details provided.'}
+
+Sent via TAAL Dance Academy Website`;
+
+    return `mailto:${CONTACT_INFO.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    const mailtoUrl = buildMailtoLink(formState);
+    setLastSubmittedData({ ...formState, mailtoUrl });
     setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 3000);
+    
+    // Automatically trigger mail client
+    window.location.href = mailtoUrl;
   };
 
   const contactItems = [
@@ -128,12 +160,54 @@ export default function Contact() {
               </p>
 
               {submitted ? (
-                <div className="text-center py-12">
-                  <div className="w-16 h-16 rounded-full bg-rose-gold/10 flex items-center justify-center mx-auto mb-4">
-                    <Send size={24} className="text-rose-gold" />
+                <div className="py-6 text-left space-y-5">
+                  <div className="flex items-center gap-3 bg-rose-gold/10 border border-rose-gold/30 rounded-xl p-4">
+                    <div className="w-10 h-10 rounded-full bg-rose-gold/20 flex items-center justify-center flex-shrink-0">
+                      <Send size={20} className="text-rose-gold" />
+                    </div>
+                    <div>
+                      <h4 className="font-display text-lg text-soft-ivory">Email Ready to Send!</h4>
+                      <p className="text-xs text-soft-ivory/60">
+                        Recipient: <span className="text-rose-gold font-mono font-medium">{CONTACT_INFO.email}</span>
+                      </p>
+                    </div>
                   </div>
-                  <h4 className="font-display text-xl text-soft-ivory mb-2">Thank You!</h4>
-                  <p className="text-soft-ivory/40 text-sm">We'll be in touch soon.</p>
+
+                  {lastSubmittedData && (
+                    <div className="bg-white/[0.03] border border-white/[0.08] rounded-xl p-4 text-xs font-mono space-y-2 text-soft-ivory/80">
+                      <p className="text-rose-gold/80 font-sans text-xs font-semibold uppercase tracking-wider mb-2">Form Template Preview</p>
+                      <p><span className="text-soft-ivory/40">To:</span> {CONTACT_INFO.email}</p>
+                      <p><span className="text-soft-ivory/40">Subject:</span> Free Trial Booking - {lastSubmittedData.name}</p>
+                      <div className="border-t border-white/10 pt-2 mt-2 space-y-1 text-soft-ivory/70">
+                        <p><span className="text-soft-ivory/40">Name:</span> {lastSubmittedData.name}</p>
+                        <p><span className="text-soft-ivory/40">Email:</span> {lastSubmittedData.email}</p>
+                        <p><span className="text-soft-ivory/40">Phone:</span> {lastSubmittedData.phone || 'N/A'}</p>
+                        <p><span className="text-soft-ivory/40">Program:</span> {lastSubmittedData.interest || 'General'}</p>
+                        <p><span className="text-soft-ivory/40">Message:</span> {lastSubmittedData.message || 'N/A'}</p>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                    {lastSubmittedData && (
+                      <a
+                        href={lastSubmittedData.mailtoUrl}
+                        className="flex-1 px-5 py-3 rounded-xl bg-gradient-to-r from-[#d4af37] via-[#e5c158] to-[#cf9f72] text-black font-semibold text-xs tracking-wider uppercase text-center hover:opacity-90 transition-opacity"
+                      >
+                        Open Email App Again
+                      </a>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSubmitted(false);
+                        setFormState({ name: '', email: '', phone: '', interest: '', message: '' });
+                      }}
+                      className="px-5 py-3 rounded-xl bg-white/5 border border-white/10 text-soft-ivory text-xs tracking-wider uppercase hover:bg-white/10 transition-colors"
+                    >
+                      Book Another Trial
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">

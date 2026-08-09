@@ -160,7 +160,10 @@ export default function CinematicVideo() {
                   Watch Our Journey (With Sound)
                 </span>
               </button>
-              <button className="group relative px-8 py-4 rounded-full overflow-hidden w-full sm:w-auto shadow-[0_0_30px_rgba(207,159,114,0.2)] cursor-pointer">
+              <button 
+                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                className="group relative px-8 py-4 rounded-full overflow-hidden w-full sm:w-auto shadow-[0_0_30px_rgba(207,159,114,0.2)] cursor-pointer"
+              >
                 <div className="absolute inset-0 bg-gradient-to-r from-[#d4af37] via-[#e5c158] to-[#cf9f72]" />
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" />
                 <span className="relative z-10 text-black font-semibold tracking-wide uppercase text-sm">

@@ -338,7 +338,7 @@ export const CONTACT_INFO = {
   address: '3673 Allan Drive SW, Edmonton, Alberta Canada T6W2K3',
   phone: '+1 (587) 377-3370',
   whatsapp: '+1 (587) 377-3370',
-  email: 'info@taaldanceacademy.com',
+  email: 'infoattaaldanceacademy@gmail.com',
   mapEmbed: 'https://maps.google.com/maps?q=3673%20Allan%20Drive%20SW,%20Edmonton,%20Alberta%20Canada%20T6W2K3&t=&z=13&ie=UTF8&iwloc=&output=embed',
   socials: {
     instagram: 'https://www.instagram.com/taaldanceacademy_yeg/',
