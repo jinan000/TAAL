@@ -6,29 +6,32 @@ import { X } from 'lucide-react';
 import SectionTitle from '../ui/SectionTitle';
 import { GALLERY_CATEGORIES } from '../../utils/constants';
 
-// Import AI generated gallery images
+// Import gallery images
 import imgBharatanatyam from '../../assets/gallery/bharatanatyam.png';
 import imgBollywood from '../../assets/gallery/dance.png';
 import imgPerformance from '../../assets/gallery/performance.png';
 import imgCommunity from '../../assets/gallery/community.png';
 import imgBts from '../../assets/gallery/bts.png';
+import imgReal1 from '../../assets/gallery/12.jpeg';
+import imgReal2 from '../../assets/gallery/34.jpeg';
+import imgReal3 from '../../assets/gallery/56.jpeg';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Generate gallery items with category tags and images
+// Gallery items with category tags and images — each uses a unique image
 const GALLERY_ITEMS = [
   { id: 1, category: 'Bharatanatyam', aspect: 'tall', color: '#D8A7A0', image: imgBharatanatyam },
   { id: 2, category: 'Bollywood', aspect: 'wide', color: '#E8C8B8', image: imgBollywood },
   { id: 3, category: 'Performances', aspect: 'square', color: '#B97A72', image: imgPerformance },
   { id: 4, category: 'Community', aspect: 'tall', color: '#F4DDD7', image: imgCommunity },
-  { id: 5, category: 'Bollywood', aspect: 'square', color: '#D8A7A0', image: imgBollywood },
+  { id: 5, category: 'Performances', aspect: 'square', color: '#D8A7A0', image: imgReal1 },
   { id: 6, category: 'Behind the Scenes', aspect: 'wide', color: '#E8C8B8', image: imgBts },
-  { id: 7, category: 'Bharatanatyam', aspect: 'square', color: '#B97A72', image: imgBharatanatyam },
-  { id: 8, category: 'Performances', aspect: 'tall', color: '#F4DDD7', image: imgPerformance },
-  { id: 9, category: 'Community', aspect: 'wide', color: '#D8A7A0', image: imgCommunity },
-  { id: 10, category: 'Behind the Scenes', aspect: 'square', color: '#E8C8B8', image: imgBts },
-  { id: 11, category: 'Bollywood', aspect: 'tall', color: '#B97A72', image: imgBollywood },
-  { id: 12, category: 'Performances', aspect: 'square', color: '#F4DDD7', image: imgPerformance },
+  { id: 7, category: 'Performances', aspect: 'wide', color: '#B97A72', image: imgReal2 },
+  { id: 8, category: 'Performances', aspect: 'tall', color: '#F4DDD7', image: imgReal3 },
+  { id: 9, category: 'Community', aspect: 'wide', color: '#D8A7A0', image: imgReal2 },
+  { id: 10, category: 'Behind the Scenes', aspect: 'square', color: '#E8C8B8', image: imgReal1 },
+  { id: 11, category: 'Bollywood', aspect: 'tall', color: '#B97A72', image: imgReal3 },
+  { id: 12, category: 'Bharatanatyam', aspect: 'square', color: '#F4DDD7', image: imgReal2 },
 ];
 
 export default function Gallery() {

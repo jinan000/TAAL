@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 import Lenis from 'lenis';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -16,11 +17,46 @@ import HomePage from './pages/HomePage';
 import FaqPage from './pages/FaqPage';
 import TaalCaresPage from './pages/TaalCaresPage';
 import ClassesPage from './pages/ClassesPage';
+import AboutPage from './pages/AboutPage';
+import FoundersPage from './pages/FoundersPage';
+import GalleryPage from './pages/GalleryPage';
 
 import { FreeTrialModalProvider } from './context/FreeTrialModalContext';
+import { TransitionProvider } from './context/TransitionContext';
 import FreeTrialModal from './components/ui/FreeTrialModal';
 
 gsap.registerPlugin(ScrollTrigger);
+
+function AnimatedRoutes() {
+  const location = useLocation();
+
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    // Refresh Lenis and ScrollTrigger after route change
+    const timer = setTimeout(() => {
+      if ((window as any).lenis) {
+        (window as any).lenis.resize();
+      }
+      ScrollTrigger.refresh();
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [location.pathname]);
+
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/founders" element={<FoundersPage />} />
+        <Route path="/gallery" element={<GalleryPage />} />
+        <Route path="/classes" element={<ClassesPage />} />
+        <Route path="/faq" element={<FaqPage />} />
+        <Route path="/taal-cares" element={<TaalCaresPage />} />
+      </Routes>
+    </AnimatePresence>
+  );
+}
 
 export default function App() {
   const lenisRef = useRef<Lenis | null>(null);
@@ -56,34 +92,29 @@ export default function App() {
   }, []);
 
   return (
-    <FreeTrialModalProvider>
-      <BrowserRouter>
-        <div className="relative w-full max-w-[100vw] overflow-x-hidden">
-          {/* Scroll Progress Bar */}
-          <ScrollProgress />
+    <TransitionProvider>
+      <FreeTrialModalProvider>
+        <BrowserRouter>
+          <div className="relative w-full max-w-[100vw] overflow-x-hidden">
+            {/* Scroll Progress Bar */}
+            <ScrollProgress />
 
-          {/* Header */}
-          <Header />
+            {/* Header */}
+            <Header />
 
-          {/* Main Routes */}
-          <main>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/classes" element={<ClassesPage />} />
-              <Route path="/faq" element={<FaqPage />} />
-              <Route path="/taal-cares" element={<TaalCaresPage />} />
-            </Routes>
-          </main>
+            {/* Main Routes */}
+            <main>
+              <AnimatedRoutes />
+            </main>
 
-          {/* Footer */}
-          <Footer />
+            {/* Footer */}
+            <Footer />
 
-          {/* Global Free Trial Modal */}
-          <FreeTrialModal />
-        </div>
-      </BrowserRouter>
-    </FreeTrialModalProvider>
+            {/* Global Free Trial Modal */}
+            <FreeTrialModal />
+          </div>
+        </BrowserRouter>
+      </FreeTrialModalProvider>
+    </TransitionProvider>
   );
 }
-
-
