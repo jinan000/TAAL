@@ -20,6 +20,7 @@ import ClassesPage from './pages/ClassesPage';
 import AboutPage from './pages/AboutPage';
 import FoundersPage from './pages/FoundersPage';
 import GalleryPage from './pages/GalleryPage';
+import RentalsPage from './pages/RentalsPage';
 
 import { FreeTrialModalProvider } from './context/FreeTrialModalContext';
 import { TransitionProvider } from './context/TransitionContext';
@@ -51,6 +52,7 @@ function AnimatedRoutes() {
         <Route path="/founders" element={<FoundersPage />} />
         <Route path="/gallery" element={<GalleryPage />} />
         <Route path="/classes" element={<ClassesPage />} />
+        <Route path="/rentals" element={<RentalsPage />} />
         <Route path="/faq" element={<FaqPage />} />
         <Route path="/taal-cares" element={<TaalCaresPage />} />
       </Routes>

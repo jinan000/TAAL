@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import SectionTitle from '../ui/SectionTitle';
+import GlassCard from '../ui/GlassCard';
 import Marquee from '../ui/Marquee';
 import { CLASSES } from '../../utils/constants';
 
@@ -202,6 +203,35 @@ export default function Classes() {
             </div>
           </motion.div>
         ))}
+      </div>
+
+      {/* Special Offers & Discounts */}
+      <div className="mt-24 max-w-4xl mx-auto px-6">
+        <div className="text-center mb-10">
+          <h3 className="font-display text-3xl text-soft-ivory mb-4">Special Offers & Discounts</h3>
+          <p className="text-soft-ivory/60">Join the Taal family and take advantage of our exclusive offers.</p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <GlassCard className="p-6 border-l-4 border-l-rose-gold border-y-white/[0.06] border-r-white/[0.06] hover:bg-white/[0.05]">
+            <h4 className="text-rose-gold font-medium mb-2 tracking-wide uppercase text-sm">Sibling Discount</h4>
+            <p className="text-soft-ivory/70 text-sm">Receive 15% OFF for each additional sibling enrolled.</p>
+          </GlassCard>
+          <GlassCard className="p-6 border-l-4 border-l-rose-gold border-y-white/[0.06] border-r-white/[0.06] hover:bg-white/[0.05]">
+            <h4 className="text-rose-gold font-medium mb-2 tracking-wide uppercase text-sm">Referral Rewards</h4>
+            <p className="text-soft-ivory/70 text-sm">Love dancing with Taal? Refer a friend, and when they register, you both get 10% off for 3 months after 6 consecutive months of subscription.</p>
+          </GlassCard>
+          <GlassCard className="p-6 border-l-4 border-l-rose-gold border-y-white/[0.06] border-r-white/[0.06] hover:bg-white/[0.05]">
+            <h4 className="text-rose-gold font-medium mb-2 tracking-wide uppercase text-sm">Multi-Class Discount</h4>
+            <p className="text-soft-ivory/70 text-sm">Enroll in more than one class and receive 20% OFF on all classes.</p>
+          </GlassCard>
+          <GlassCard className="p-6 border-l-4 border-l-rose-gold border-y-white/[0.06] border-r-white/[0.06] hover:bg-white/[0.05]">
+            <h4 className="text-rose-gold font-medium mb-2 tracking-wide uppercase text-sm">Seasonal Promotions</h4>
+            <p className="text-soft-ivory/70 text-sm">Keep an eye on our website and social media for special offers, holiday promotions, and limited-time discounts throughout the year.</p>
+          </GlassCard>
+        </div>
+        <p className="text-center text-soft-ivory/40 text-xs mt-8 italic pb-8">
+          * Terms & conditions apply. Discounts cannot be combined unless otherwise stated.
+        </p>
       </div>
     </section>
   );

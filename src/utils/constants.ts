@@ -18,6 +18,7 @@ export const NAV_LINKS = [
   { label: 'Home', href: '#hero' },
   { label: 'About', href: '/about' },
   { label: 'Classes', href: '/classes' },
+  { label: 'Rentals', href: '/rentals' },
   { label: 'Founders', href: '/founders' },
   { label: 'Gallery', href: '/gallery' },
   { label: 'TAAL Cares', href: '/taal-cares' },

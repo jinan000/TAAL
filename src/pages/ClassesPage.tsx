@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Classes from '../components/sections/Classes';
-import Rentals from '../components/sections/Rentals';
+import RentalsPreview from '../components/sections/RentalsPreview';
 
 export default function ClassesPage() {
   useEffect(() => {
@@ -34,7 +34,7 @@ export default function ClassesPage() {
 
       {/* Rentals Section */}
       <div className="mt-16 border-t border-white/[0.05] pt-12">
-        <Rentals />
+        <RentalsPreview />
       </div>
     </div>
   );
