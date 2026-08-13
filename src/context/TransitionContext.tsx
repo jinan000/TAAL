@@ -10,7 +10,7 @@ interface TransitionContextType {
 const TransitionContext = createContext<TransitionContextType | undefined>(undefined);
 
 export function TransitionProvider({ children }: { children: ReactNode }) {
-  const [transition, setTransition] = useState<TransitionType>('fade');
+  const [transition, setTransition] = useState<TransitionType>('slide');
 
   return (
     <TransitionContext.Provider value={{ transition, setTransition }}>

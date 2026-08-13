@@ -1,13 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Sparkles } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { NAV_LINKS } from '../../utils/constants';
 import MagneticButton from '../ui/MagneticButton';
 import logoImage from '../../assets/Taal-Logopng.png';
 
 import { useFreeTrialModal } from '../../context/FreeTrialModalContext';
-import { useTransition, type TransitionType } from '../../context/TransitionContext';
 
 const toTitleCase = (str: string) => {
   if (str.toUpperCase().includes('TAAL') || str === 'FAQ') return str;
@@ -17,22 +16,12 @@ const toTitleCase = (str: string) => {
   );
 };
 
-const TRANSITION_OPTIONS: { value: TransitionType; label: string; icon: string }[] = [
-  { value: 'fade', label: 'Fade', icon: '◐' },
-  { value: 'slide', label: 'Slide', icon: '◫' },
-  { value: 'zoom', label: 'Zoom', icon: '◎' },
-  { value: 'flip', label: 'Flip', icon: '◇' },
-];
-
 export default function Header() {
   const { openModal } = useFreeTrialModal();
-  const { transition, setTransition } = useTransition();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
-  const [showTransitionPicker, setShowTransitionPicker] = useState(false);
-  const pickerRef = useRef<HTMLDivElement>(null);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -85,17 +74,6 @@ export default function Header() {
     document.body.style.overflow = isMobileOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
   }, [isMobileOpen]);
-
-  // Close transition picker on outside click
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (pickerRef.current && !pickerRef.current.contains(e.target as Node)) {
-        setShowTransitionPicker(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
 
   const handleNavClick = (href: string) => {
     setIsMobileOpen(false);
@@ -188,66 +166,8 @@ export default function Header() {
             })}
           </nav>
 
-          {/* CTA + Transition Picker + Mobile Toggle */}
+          {/* CTA + Mobile Toggle */}
           <div className="flex items-center gap-3 relative z-10 flex-shrink-0">
-            {/* Transition Animation Picker */}
-            <div ref={pickerRef} className="relative hidden md:block">
-              <button
-                onClick={() => setShowTransitionPicker(!showTransitionPicker)}
-                className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all duration-300 cursor-pointer ${
-                  showTransitionPicker
-                    ? 'border-rose-gold/50 text-rose-gold bg-rose-gold/10 shadow-[0_0_15px_rgba(216,167,160,0.2)]'
-                    : 'border-white/10 text-soft-ivory/50 hover:text-rose-gold hover:border-rose-gold/30'
-                }`}
-                aria-label="Choose page transition animation"
-                title="Page transition style"
-              >
-                <Sparkles size={14} />
-              </button>
-
-              {/* Picker Dropdown */}
-              <AnimatePresence>
-                {showTransitionPicker && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 8, scale: 0.95 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 8, scale: 0.95 }}
-                    transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                    className="absolute top-full right-0 mt-3 w-44 rounded-2xl border border-rose-gold/15 bg-luxury-black/95 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.6)] overflow-hidden"
-                  >
-                    <div className="p-1.5">
-                      <p className="px-3 py-2 text-[10px] tracking-[0.2em] uppercase text-rose-gold/60 font-medium">
-                        Transition
-                      </p>
-                      {TRANSITION_OPTIONS.map((option) => (
-                        <button
-                          key={option.value}
-                          onClick={() => {
-                            setTransition(option.value);
-                            setShowTransitionPicker(false);
-                          }}
-                          className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-all duration-200 cursor-pointer ${
-                            transition === option.value
-                              ? 'bg-rose-gold/10 text-rose-gold'
-                              : 'text-soft-ivory/60 hover:text-soft-ivory hover:bg-white/[0.04]'
-                          }`}
-                        >
-                          <span className="text-base leading-none">{option.icon}</span>
-                          <span className="text-xs tracking-widest uppercase font-medium">{option.label}</span>
-                          {transition === option.value && (
-                            <motion.div
-                              layoutId="activeTransition"
-                              className="ml-auto w-1.5 h-1.5 rounded-full bg-rose-gold shadow-[0_0_8px_rgba(216,167,160,0.6)]"
-                            />
-                          )}
-                        </button>
-                      ))}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-
             <div className="hidden md:block">
               <MagneticButton
                 variant="primary"
@@ -294,29 +214,6 @@ export default function Header() {
                   {toTitleCase(link.label)}
                 </motion.a>
               ))}
-
-              {/* Mobile Transition Picker */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: NAV_LINKS.length * 0.05, duration: 0.4 }}
-                className="flex items-center gap-2 mt-2"
-              >
-                {TRANSITION_OPTIONS.map((option) => (
-                  <button
-                    key={option.value}
-                    onClick={() => setTransition(option.value)}
-                    className={`w-10 h-10 rounded-full border flex items-center justify-center transition-all duration-300 cursor-pointer ${
-                      transition === option.value
-                        ? 'border-rose-gold/50 text-rose-gold bg-rose-gold/10 shadow-[0_0_12px_rgba(216,167,160,0.3)]'
-                        : 'border-white/10 text-soft-ivory/40 hover:text-soft-ivory/70'
-                    }`}
-                    title={option.label}
-                  >
-                    <span className="text-sm">{option.icon}</span>
-                  </button>
-                ))}
-              </motion.div>
 
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
