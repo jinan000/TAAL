@@ -106,6 +106,9 @@ export default function CinematicVideo() {
       ref={sectionRef}
       className="relative w-full overflow-hidden bg-[#050505] py-24 md:py-32"
     >
+      {/* Mobile Separation Line */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-rose-gold/30 to-transparent z-10 md:hidden" />
+
       {/* Background Ambient Layers */}
       <div className="absolute inset-0 pointer-events-none z-0">
         <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-rose-gold/5 rounded-full blur-[120px] mix-blend-screen" />

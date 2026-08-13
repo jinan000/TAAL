@@ -68,6 +68,9 @@ export default function WhyChoose() {
         backgroundImage: `linear-gradient(180deg, rgba(5, 5, 5, 0.9) 0%, rgba(17, 17, 17, 0.3) 50%, rgba(5, 5, 5, 0.9) 100%), url(${whyChooseBg})`
       }}
     >
+      {/* Mobile Separation Line */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-rose-gold/30 to-transparent z-10 md:hidden" />
+
       <div className="section-container relative z-10">
         <SectionTitle eyebrow="Why Choose Us">
           Where Dance Becomes{' '}

@@ -143,16 +143,14 @@ export default function Testimonials() {
         style={{ background: 'linear-gradient(180deg, #050505 0%, rgba(5,5,5,0.4) 25%, rgba(5,5,5,0.4) 75%, #050505 100%)' }}
       />
 
-      <div className="section-container relative z-10 mb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
-        <div>
-          <SectionTitle eyebrow="Voices of TAAL">
-            What Our Community{' '}
-            <span className="text-gradient-rose">Says</span>
-          </SectionTitle>
-        </div>
+      <div className="section-container relative z-10 mb-12 flex flex-col items-center justify-center gap-6">
+        <SectionTitle eyebrow="Voices of TAAL" align="center" className="!mb-0 md:!mb-0">
+          What Our Community{' '}
+          <span className="text-gradient-rose">Says</span>
+        </SectionTitle>
 
         {/* Scroll Control Buttons */}
-        <div className="flex items-center gap-3 self-end md:self-auto pb-2">
+        <div className="flex items-center gap-3 pb-2 mt-2">
           <button
             onClick={() => handleScroll('left')}
             aria-label="Scroll left"
