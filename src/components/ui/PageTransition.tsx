@@ -1,12 +1,12 @@
-import { motion } from 'framer-motion';
+import { motion, type TargetAndTransition } from 'framer-motion';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useTransition, type TransitionType } from '../../context/TransitionContext';
 import type { ReactNode } from 'react';
 
 const transitionVariants: Record<TransitionType, {
-  initial: Record<string, unknown>;
-  animate: Record<string, unknown>;
-  exit: Record<string, unknown>;
+  initial: TargetAndTransition;
+  animate: TargetAndTransition;
+  exit: TargetAndTransition;
 }> = {
   fade: {
     initial: { opacity: 0 },
