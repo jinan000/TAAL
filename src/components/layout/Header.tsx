@@ -81,7 +81,20 @@ export default function Header() {
 
     if (href.startsWith('/')) {
       navigate(href);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      
+      const hash = href.split('#')[1];
+      if (hash) {
+        setTimeout(() => {
+          const target = document.getElementById(hash);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+          } else {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+        }, 150);
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     } else if (href.startsWith('#')) {
       if (location.pathname !== '/') {
         navigate('/');

@@ -18,7 +18,6 @@ import FaqPage from './pages/FaqPage';
 import TaalCaresPage from './pages/TaalCaresPage';
 import ClassesPage from './pages/ClassesPage';
 import AboutPage from './pages/AboutPage';
-import FoundersPage from './pages/FoundersPage';
 import GalleryPage from './pages/GalleryPage';
 import RentalsPage from './pages/RentalsPage';
 
@@ -49,7 +48,6 @@ function AnimatedRoutes() {
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
-        <Route path="/founders" element={<FoundersPage />} />
         <Route path="/gallery" element={<GalleryPage />} />
         <Route path="/classes" element={<ClassesPage />} />
         <Route path="/rentals" element={<RentalsPage />} />

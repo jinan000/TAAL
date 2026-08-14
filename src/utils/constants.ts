@@ -18,10 +18,10 @@ export const NAV_LINKS = [
   { label: 'Home', href: '#hero' },
   { label: 'About', href: '/about' },
   { label: 'Classes', href: '/classes' },
-  { label: 'Rentals', href: '/rentals' },
-  { label: 'Founders', href: '/founders' },
   { label: 'Gallery', href: '/gallery' },
+  { label: 'Join our team', href: '/taal-cares#join-team' },
   { label: 'TAAL Cares', href: '/taal-cares' },
+  { label: 'Rentals', href: '/rentals' },
   { label: 'FAQ', href: '/faq' },
   { label: 'Contact', href: '#contact' },
 ] as const;
