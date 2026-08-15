@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -52,6 +52,33 @@ const GALLERY_ITEMS = [
   { id: 19, category: 'Community', aspect: 'wide', color: '#B97A72', image: img19 },
 ];
 
+const GalleryCard = React.memo(({ item, onClick }: { item: typeof GALLERY_ITEMS[0]; onClick: (id: number) => void }) => (
+  <motion.div
+    layout
+    className="gallery-item break-inside-avoid cursor-pointer group opacity-0"
+    onClick={() => onClick(item.id)}
+  >
+    <div
+      style={{ backgroundColor: item.color }}
+      className={`relative rounded-xl overflow-hidden ${
+        item.aspect === 'tall' ? 'aspect-[3/4]' : item.aspect === 'wide' ? 'aspect-[4/3]' : 'aspect-square'
+      }`}
+    >
+      <img
+        src={item.image}
+        alt={item.category}
+        loading="lazy"
+        decoding="async"
+        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110 will-change-transform"
+      />
+      <div
+        className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-0 transition-opacity duration-500 will-change-opacity"
+      />
+    </div>
+  </motion.div>
+));
+GalleryCard.displayName = 'GalleryCard';
+
 export default function Gallery() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [activeFilter, setActiveFilter] = useState('All');
@@ -62,21 +89,28 @@ export default function Gallery() {
       ? GALLERY_ITEMS
       : GALLERY_ITEMS.filter((item) => item.category === activeFilter);
 
+  const handleItemClick = useCallback((id: number) => {
+    setLightboxItem(id);
+  }, []);
+
   useEffect(() => {
     if (!sectionRef.current) return;
     const ctx = gsap.context(() => {
-      gsap.from('.gallery-item', {
-        opacity: 0,
-        y: 30,
-        scale: 0.95,
-        duration: 0.5,
-        stagger: 0.06,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: '.gallery-grid',
-          start: 'top 80%',
+      ScrollTrigger.batch('.gallery-item', {
+        onEnter: (elements) => {
+          gsap.to(elements, {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.5,
+            stagger: 0.06,
+            ease: 'power2.out',
+          });
         },
+        once: true
       });
+      // Initial state is set in className (opacity-0), need to set transform initial values
+      gsap.set('.gallery-item', { y: 30, scale: 0.95 });
     }, sectionRef);
     return () => ctx.revert();
   }, [activeFilter]);
@@ -88,7 +122,7 @@ export default function Gallery() {
       className="relative section-spacing overflow-hidden"
       style={{ background: 'linear-gradient(180deg, #050505 0%, #0a0808 50%, #050505 100%)' }}
     >
-      <div className="section-container">
+      <div className="section-container" style={{ contentVisibility: 'auto' }}>
         <SectionTitle eyebrow="Visual Stories">
           A Glimpse Into Our{' '}
           <span className="text-gradient-rose">World</span>
@@ -114,35 +148,7 @@ export default function Gallery() {
         {/* Masonry Grid */}
         <div className="gallery-grid columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
           {filtered.map((item) => (
-            <motion.div
-              key={item.id}
-              layout
-              className="gallery-item break-inside-avoid cursor-pointer group"
-              onClick={() => setLightboxItem(item.id)}
-            >
-              <div
-                className={`relative rounded-xl overflow-hidden ${
-                  item.aspect === 'tall' ? 'aspect-[3/4]' : item.aspect === 'wide' ? 'aspect-[4/3]' : 'aspect-square'
-                }`}
-              >
-                {/* Image */}
-                <img
-                  src={item.image}
-                  alt={item.category}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-                />
-                {/* Overlay gradient to keep it on-brand */}
-                <div
-                  className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-500"
-                />
-                {/* Category label on hover */}
-                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-luxury-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <span className="text-[10px] tracking-widest uppercase text-soft-ivory/70">
-                    {item.category}
-                  </span>
-                </div>
-              </div>
-            </motion.div>
+            <GalleryCard key={item.id} item={item} onClick={handleItemClick} />
           ))}
         </div>
       </div>
@@ -177,17 +183,8 @@ export default function Gallery() {
                     <img 
                       src={item?.image} 
                       alt={item?.category} 
-                      className="absolute inset-0 w-full h-full object-cover" 
+                      className="absolute inset-0 w-full h-full object-contain" 
                     />
-                    <div className="absolute inset-0 bg-black/60" />
-                    <div className="relative z-10 text-center">
-                      <div className="w-24 h-24 rounded-full border border-rose-gold/40 flex items-center justify-center mx-auto mb-4 backdrop-blur-sm bg-black/30">
-                        <span className="font-display text-4xl text-rose-gold">{item?.category[0]}</span>
-                      </div>
-                      <p className="text-lg tracking-widest uppercase text-soft-ivory font-medium drop-shadow-md">
-                        {item?.category}
-                      </p>
-                    </div>
                   </div>
                 );
               })()}

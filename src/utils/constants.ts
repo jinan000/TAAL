@@ -8,11 +8,11 @@ import imgElite from '../assets/classes/elite.png';
 import imgSemiClassical from '../assets/classes/semiclassical.png';
 import imgWedding from '../assets/classes/wedding.png';
 import imgOnline from '../assets/classes/online.png';
-import imgBharatanatyam from '../assets/gallery/bharatanatyam.png';
-import imgDance from '../assets/gallery/dance.png';
-import imgPerformance from '../assets/gallery/performance.png';
-import imgBts from '../assets/gallery/bts.png';
-import imgCommunity from '../assets/gallery/community.png';
+import imgBharatanatyam from '../assets/gallery/1 (1).webp';
+import imgDance from '../assets/gallery/1 (2).webp';
+import imgPerformance from '../assets/gallery/2.jpeg';
+import imgBts from '../assets/gallery/3.jpeg';
+import imgCommunity from '../assets/gallery/4.jpeg';
 
 export const NAV_LINKS = [
   { label: 'Home', href: '#hero' },
