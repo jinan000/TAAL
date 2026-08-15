@@ -7,31 +7,49 @@ import SectionTitle from '../ui/SectionTitle';
 import { GALLERY_CATEGORIES } from '../../utils/constants';
 
 // Import gallery images
-import imgBharatanatyam from '../../assets/gallery/bharatanatyam.png';
-import imgBollywood from '../../assets/gallery/dance.png';
-import imgPerformance from '../../assets/gallery/performance.png';
-import imgCommunity from '../../assets/gallery/community.png';
-import imgBts from '../../assets/gallery/bts.png';
-import imgReal1 from '../../assets/gallery/12.jpeg';
-import imgReal2 from '../../assets/gallery/34.jpeg';
-import imgReal3 from '../../assets/gallery/56.jpeg';
+import img1 from '../../assets/gallery/1 (1).webp';
+import img2 from '../../assets/gallery/1 (2).webp';
+import img3 from '../../assets/gallery/1 (3).webp';
+import img4 from '../../assets/gallery/1 (4).webp';
+import img5 from '../../assets/gallery/1 (5).webp';
+import img6 from '../../assets/gallery/1 (6).webp';
+import img7 from '../../assets/gallery/1 (7).webp';
+import img8 from '../../assets/gallery/1 (8).webp';
+import img9 from '../../assets/gallery/1 (9).webp';
+import img10 from '../../assets/gallery/1 (10).webp';
+import img11 from '../../assets/gallery/1 (11).webp';
+import img12 from '../../assets/gallery/1 (12).webp';
+import img13 from '../../assets/gallery/1 (13).webp';
+import img14 from '../../assets/gallery/1 (14).webp';
+import img15 from '../../assets/gallery/1 (15).webp';
+import img16 from '../../assets/gallery/1 (16).webp';
+import img17 from '../../assets/gallery/2.jpeg';
+import img18 from '../../assets/gallery/3.jpeg';
+import img19 from '../../assets/gallery/4.jpeg';
 
 gsap.registerPlugin(ScrollTrigger);
 
 // Gallery items with category tags and images — each uses a unique image
 const GALLERY_ITEMS = [
-  { id: 1, category: 'Bharatanatyam', aspect: 'tall', color: '#D8A7A0', image: imgBharatanatyam },
-  { id: 2, category: 'Bollywood', aspect: 'wide', color: '#E8C8B8', image: imgBollywood },
-  { id: 3, category: 'Performances', aspect: 'square', color: '#B97A72', image: imgPerformance },
-  { id: 4, category: 'Community', aspect: 'tall', color: '#F4DDD7', image: imgCommunity },
-  { id: 5, category: 'Performances', aspect: 'square', color: '#D8A7A0', image: imgReal1 },
-  { id: 6, category: 'Behind the Scenes', aspect: 'wide', color: '#E8C8B8', image: imgBts },
-  { id: 7, category: 'Performances', aspect: 'wide', color: '#B97A72', image: imgReal2 },
-  { id: 8, category: 'Performances', aspect: 'tall', color: '#F4DDD7', image: imgReal3 },
-  { id: 9, category: 'Community', aspect: 'wide', color: '#D8A7A0', image: imgReal2 },
-  { id: 10, category: 'Behind the Scenes', aspect: 'square', color: '#E8C8B8', image: imgReal1 },
-  { id: 11, category: 'Bollywood', aspect: 'tall', color: '#B97A72', image: imgReal3 },
-  { id: 12, category: 'Bharatanatyam', aspect: 'square', color: '#F4DDD7', image: imgReal2 },
+  { id: 1, category: 'Bharatanatyam', aspect: 'tall', color: '#D8A7A0', image: img1 },
+  { id: 2, category: 'Bollywood', aspect: 'wide', color: '#E8C8B8', image: img2 },
+  { id: 3, category: 'Performances', aspect: 'square', color: '#B97A72', image: img3 },
+  { id: 4, category: 'Community', aspect: 'tall', color: '#F4DDD7', image: img4 },
+  { id: 5, category: 'Performances', aspect: 'square', color: '#D8A7A0', image: img5 },
+  { id: 6, category: 'Behind the Scenes', aspect: 'wide', color: '#E8C8B8', image: img6 },
+  { id: 7, category: 'Performances', aspect: 'wide', color: '#B97A72', image: img7 },
+  { id: 8, category: 'Performances', aspect: 'tall', color: '#F4DDD7', image: img8 },
+  { id: 9, category: 'Community', aspect: 'wide', color: '#D8A7A0', image: img9 },
+  { id: 10, category: 'Behind the Scenes', aspect: 'square', color: '#E8C8B8', image: img10 },
+  { id: 11, category: 'Bollywood', aspect: 'tall', color: '#B97A72', image: img11 },
+  { id: 12, category: 'Bharatanatyam', aspect: 'square', color: '#F4DDD7', image: img12 },
+  { id: 13, category: 'Performances', aspect: 'wide', color: '#D8A7A0', image: img13 },
+  { id: 14, category: 'Community', aspect: 'tall', color: '#E8C8B8', image: img14 },
+  { id: 15, category: 'Behind the Scenes', aspect: 'square', color: '#B97A72', image: img15 },
+  { id: 16, category: 'Bollywood', aspect: 'wide', color: '#F4DDD7', image: img16 },
+  { id: 17, category: 'Bharatanatyam', aspect: 'tall', color: '#D8A7A0', image: img17 },
+  { id: 18, category: 'Performances', aspect: 'square', color: '#E8C8B8', image: img18 },
+  { id: 19, category: 'Community', aspect: 'wide', color: '#B97A72', image: img19 },
 ];
 
 export default function Gallery() {
