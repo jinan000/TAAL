@@ -129,7 +129,7 @@ export default function Header() {
     <>
       <div className="fixed top-0 left-0 right-0 z-50 flex justify-center mt-3 px-4 pointer-events-none">
         <motion.header
-          className={`w-full max-w-[1400px] rounded-[3rem] border border-rose-gold/20 shadow-[0_0_40px_rgba(216,167,160,0.08)] transition-all duration-500 flex items-center justify-between px-5 md:px-6 py-2 pointer-events-auto ${
+          className={`w-full max-w-[98%] 2xl:max-w-[1600px] mx-auto rounded-[3rem] border border-rose-gold/20 shadow-[0_0_40px_rgba(216,167,160,0.08)] transition-all duration-500 flex items-center justify-between px-5 md:px-6 py-2 pointer-events-auto ${
             isScrolled
               ? 'bg-luxury-black/80 backdrop-blur-2xl'
               : 'bg-luxury-black/50 backdrop-blur-xl'
@@ -152,7 +152,7 @@ export default function Header() {
           </a>
 
           {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-4 xl:gap-8 absolute left-1/2 -translate-x-1/2">
+          <nav className="hidden lg:flex items-center justify-center flex-1 gap-2 xl:gap-5 px-4">
             {NAV_LINKS.map((link) => {
               const active = isLinkActive(link.href);
               return (
@@ -160,7 +160,7 @@ export default function Header() {
                   key={link.href}
                   href={link.href}
                   onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
-                  className={`relative px-2 py-2 text-[15px] font-body whitespace-nowrap transition-colors duration-300 ${
+                  className={`relative px-1.5 xl:px-2 py-2 text-[13.5px] xl:text-[14.5px] font-body whitespace-nowrap transition-colors duration-300 ${
                     active
                       ? 'text-rose-gold font-medium'
                       : 'text-soft-ivory/70 hover:text-soft-ivory'
