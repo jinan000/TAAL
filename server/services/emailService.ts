@@ -1,3 +1,5 @@
+import { Resend } from 'resend';
+
 // Get Resend SDK client lazily to allow dynamic environment resolution
 function getResendClient(): Resend {
   const apiKey = process.env.RESEND_API_KEY && process.env.RESEND_API_KEY !== 're_placeholder_key'

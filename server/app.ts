@@ -11,15 +11,21 @@ const app = express();
 
 // Strict CORS Policy Configuration
 const isProduction = process.env.NODE_ENV === 'production';
-const allowedOrigin = process.env.ALLOWED_ORIGIN || 'http://localhost:5173';
+const allowedOrigins = (process.env.ALLOWED_ORIGIN || 'http://localhost:5173')
+  .split(',')
+  .map((o) => o.trim());
 
 const corsOptions: cors.CorsOptions = {
   origin: (origin, callback) => {
-    // Allow non-browser requests (like curl or postman) or matching origins
+    // Allow non-browser requests (like curl or postman) or all origins in dev
     if (!origin || !isProduction) {
       return callback(null, true);
     }
-    if (origin === allowedOrigin || origin.endsWith('.vercel.app') || origin.includes('taaldanceacademy.com')) {
+    if (
+      allowedOrigins.includes(origin) ||
+      origin.endsWith('.vercel.app') ||
+      origin.includes('taaldanceacademy.ca')
+    ) {
       return callback(null, true);
     }
     return callback(new Error('CORS policy: Access denied for this origin.'));

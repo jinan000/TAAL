@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, CheckCircle2, AlertCircle, Sparkles, Send } from 'lucide-react';
 import { useFreeTrialModal } from '../../context/FreeTrialModalContext';
 import MagneticButton from './MagneticButton';
+import { API_URL } from '../../utils/config';
 
 const DANCE_STYLES = [
   'Bollywood',
@@ -71,7 +72,7 @@ export default function FreeTrialModal() {
     }
 
     try {
-      const response = await fetch('/api/free-trial', {
+      const response = await fetch(`${API_URL}/api/free-trial`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

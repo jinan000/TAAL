@@ -1,0 +1,24 @@
+{
+  "version": 2,
+  "buildCommand": "",
+  "outputDirectory": "",
+  "functions": {
+    "api/**/*.ts": {
+      "runtime": "@vercel/node@3"
+    }
+  },
+  "rewrites": [
+    { "source": "/api/contact", "destination": "/api/contact" },
+    { "source": "/api/free-trial", "destination": "/api/free-trial" }
+  ],
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+      ]
+    }
+  ]
+}

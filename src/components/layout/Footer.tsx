@@ -80,34 +80,20 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Developer & Partner Links */}
-        <div className="flex flex-col sm:flex-row items-center gap-4 mb-8">
-          {/* Meet the Developers */}
-          <a
-            href="https://www.instagram.com/intellex.web"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/[0.08] text-soft-ivory/50 text-sm tracking-wider transition-all duration-300 hover:text-rose-gold hover:border-rose-gold/40 hover:bg-white/[0.02] hover:shadow-[0_0_20px_rgba(216,167,160,0.15)] group"
-          >
-            <span className="opacity-70 group-hover:opacity-100 transition-opacity">Meet the Developers</span>
-            <InstagramIcon size={16} />
-          </a>
-
-          {/* Nexnore Website */}
-          <a
-            href="https://nexnore.ca"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/[0.08] text-soft-ivory/50 text-sm tracking-wider transition-all duration-300 hover:text-rose-gold hover:border-rose-gold/40 hover:bg-white/[0.02] hover:shadow-[0_0_20px_rgba(216,167,160,0.15)] group"
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-70 group-hover:opacity-100 transition-opacity">
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="2" y1="12" x2="22" y2="12"></line>
-              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-            </svg>
-            <span className="opacity-70 group-hover:opacity-100 transition-opacity">Nexnore.ca</span>
-          </a>
-        </div>
+        {/* Nexnore Credit */}
+        <a
+          href="https://nexnore.ca"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 mb-8 px-5 py-2.5 rounded-full border border-white/[0.08] text-soft-ivory/50 text-sm tracking-wider transition-all duration-300 hover:text-rose-gold hover:border-rose-gold/40 hover:bg-white/[0.02] hover:shadow-[0_0_20px_rgba(216,167,160,0.15)] group"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-70 group-hover:opacity-100 transition-opacity">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+          <span className="opacity-70 group-hover:opacity-100 transition-opacity">Designed & Developed by Nexnore.</span>
+        </a>
 
         {/* Copyright */}
         <p className="text-soft-ivory/20 text-xs tracking-wider">

@@ -6,6 +6,7 @@ import SectionTitle from '../ui/SectionTitle';
 import GlassCard from '../ui/GlassCard';
 import MagneticButton from '../ui/MagneticButton';
 import { CONTACT_INFO } from '../../utils/constants';
+import { API_URL } from '../../utils/config';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -70,7 +71,7 @@ export default function Contact() {
     }
 
     try {
-      const response = await fetch('/api/contact', {
+      const response = await fetch(`${API_URL}/api/contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
