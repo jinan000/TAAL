@@ -2,11 +2,6 @@
   "version": 2,
   "buildCommand": "",
   "outputDirectory": "",
-  "functions": {
-    "api/**/*.ts": {
-      "runtime": "@vercel/node@3"
-    }
-  },
   "rewrites": [
     { "source": "/api/contact", "destination": "/api/contact" },
     { "source": "/api/free-trial", "destination": "/api/free-trial" }
