@@ -1,10 +1,9 @@
 {
   "version": 2,
-  "buildCommand": "",
-  "outputDirectory": "",
   "rewrites": [
     { "source": "/api/contact", "destination": "/api/contact" },
-    { "source": "/api/free-trial", "destination": "/api/free-trial" }
+    { "source": "/api/free-trial", "destination": "/api/free-trial" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ],
   "headers": [
     {
