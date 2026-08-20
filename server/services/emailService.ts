@@ -8,7 +8,7 @@ function getResendClient(): Resend {
 
 // Email routing defaults
 const getRecipientEmail = () => process.env.RECIPIENT_EMAIL || 'infoattaaldanceacademy@gmail.com';
-const getSenderEmail = () => process.env.SENDER_EMAIL || 'TAAL Dance Academy <onboarding@resend.dev>';
+const getSenderEmail = () => process.env.SENDER_EMAIL || 'TAAL Dance Academy <no-reply@taaldanceacademy.ca>';
 
 export interface ContactFormData {
   name: string;
@@ -132,7 +132,7 @@ export async function sendContactEmail(data: ContactFormData) {
     from: getSenderEmail(),
     to: [getRecipientEmail()],
     replyTo: data.email, // Enables direct reply to visitor
-    subject: `New Website Enquiry: ${data.name} - ${data.subject || 'General Enquiry'}`,
+    subject: `New Contact Enquiry — TAAL Dance Academy`,
     html,
   });
 }
@@ -159,7 +159,7 @@ export async function sendFreeTrialEmail(data: FreeTrialFormData) {
     from: getSenderEmail(),
     to: [getRecipientEmail()],
     replyTo: data.email, // Enables direct reply to visitor
-    subject: `New Free Trial Request: ${data.name} (${data.danceStyle})`,
+    subject: `New Free Trial Booking Request — TAAL Dance Academy`,
     html,
   });
 }
