@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { gsap } from 'gsap';
 import MagneticButton from '../ui/MagneticButton';
 import ScrollingWords from '../ui/ScrollingWords';
@@ -8,6 +9,7 @@ import { useFreeTrialModal } from '../../context/FreeTrialModalContext';
 
 export default function Hero() {
   const { openModal } = useFreeTrialModal();
+  const navigate = useNavigate();
   const sectionRef = useRef<HTMLDivElement>(null);
 
   // GSAP hero entrance
@@ -94,7 +96,7 @@ export default function Hero() {
           >
             Book A Free Trial
           </MagneticButton>
-          <MagneticButton variant="secondary" href="#classes">
+          <MagneticButton variant="secondary" onClick={() => navigate('/classes')}>
             Explore Classes
           </MagneticButton>
         </div>
