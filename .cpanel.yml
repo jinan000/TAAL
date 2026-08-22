@@ -2,4 +2,4 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home2/nddhtxmy/public_html/website_2ce7baf2/
-    - /bin/cp -R dist/* $DEPLOYPATH
+    - /bin/cp -a dist/. $DEPLOYPATH/
