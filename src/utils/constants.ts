@@ -102,7 +102,7 @@ export const CLASSES = [
   },
   {
     title: 'Titans Bollywood',
-    subtitle: 'Ages 9–15',
+    subtitle: 'Age 9-13yrs',
     price: '$60/month',
     dropIn: '$20/class',
     description: 'A dynamic Bollywood program focused on technique, performance, and self-expression.',
@@ -111,7 +111,7 @@ export const CLASSES = [
   },
   {
     title: 'Elite Bollywood',
-    subtitle: 'Ages 16–25',
+    subtitle: 'Age 14-25yrs',
     price: '$60/month',
     dropIn: '$20/class',
     description: 'Advanced Bollywood and fusion training designed to refine technique, versatility, and stage presence.',

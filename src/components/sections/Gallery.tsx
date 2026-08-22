@@ -27,6 +27,19 @@ import img17 from '../../assets/gallery/2.jpeg';
 import img18 from '../../assets/gallery/3.jpeg';
 import img19 from '../../assets/gallery/4.jpeg';
 
+// New images
+import newImg1 from '../../assets/gallery/image1 (1).webp';
+import newImg2 from '../../assets/gallery/image1 (2).webp';
+import newImg3 from '../../assets/gallery/image1 (3).webp';
+import newImg4 from '../../assets/gallery/image1 (4).webp';
+import newImg5 from '../../assets/gallery/image1 (5).webp';
+import newImg6 from '../../assets/gallery/image1 (6).webp';
+import newImg7 from '../../assets/gallery/image1 (7).webp';
+import newImg8 from '../../assets/gallery/image1 (8).webp';
+import newImg9 from '../../assets/gallery/image1 (9).webp';
+import newImg10 from '../../assets/gallery/image1 (10).webp';
+import newImg11 from '../../assets/gallery/image1 (11).webp';
+import newImg12 from '../../assets/gallery/image1 (12).webp';
 gsap.registerPlugin(ScrollTrigger);
 
 // Gallery items with category tags and images — each uses a unique image
@@ -50,6 +63,18 @@ const GALLERY_ITEMS = [
   { id: 17, category: 'Bharatanatyam', aspect: 'tall', color: '#D8A7A0', image: img17 },
   { id: 18, category: 'Performances', aspect: 'square', color: '#E8C8B8', image: img18 },
   { id: 19, category: 'Community', aspect: 'wide', color: '#B97A72', image: img19 },
+  { id: 20, category: 'Bharatanatyam', aspect: 'tall', color: '#D8A7A0', image: newImg1 },
+  { id: 21, category: 'Bollywood', aspect: 'wide', color: '#E8C8B8', image: newImg2 },
+  { id: 22, category: 'Performances', aspect: 'square', color: '#B97A72', image: newImg3 },
+  { id: 23, category: 'Community', aspect: 'tall', color: '#F4DDD7', image: newImg4 },
+  { id: 24, category: 'Behind the Scenes', aspect: 'square', color: '#D8A7A0', image: newImg5 },
+  { id: 25, category: 'Bharatanatyam', aspect: 'wide', color: '#E8C8B8', image: newImg6 },
+  { id: 26, category: 'Bollywood', aspect: 'tall', color: '#B97A72', image: newImg7 },
+  { id: 27, category: 'Performances', aspect: 'wide', color: '#F4DDD7', image: newImg8 },
+  { id: 28, category: 'Community', aspect: 'square', color: '#D8A7A0', image: newImg9 },
+  { id: 29, category: 'Behind the Scenes', aspect: 'tall', color: '#E8C8B8', image: newImg10 },
+  { id: 30, category: 'Bharatanatyam', aspect: 'square', color: '#B97A72', image: newImg11 },
+  { id: 31, category: 'Bollywood', aspect: 'wide', color: '#F4DDD7', image: newImg12 },
 ];
 
 const GalleryCard = React.memo(({ item, onClick }: { item: typeof GALLERY_ITEMS[0]; onClick: (id: number) => void }) => (
